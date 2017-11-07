@@ -9,10 +9,7 @@
 <meta charset="UTF-8">
 	<!-- jQuery読込みがBootstrapよりも後にあると、時々正しく動作しない時があるらしい。 -->
 	 <!-- jQuery読み込み -->
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- GoogleMapを使う -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script>
+	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 	 <!-- BootstrapのJS読み込み -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">

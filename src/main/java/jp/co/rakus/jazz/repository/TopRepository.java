@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.rakus.jazz.domain.Bar;
@@ -23,8 +25,8 @@ public class TopRepository {
 		bar.setNameEng(rs.getString("name_eng"));
 		bar.setAddress(rs.getString("address"));
 		bar.setTel(rs.getString("tel"));
-		bar.setRegionId(rs.getString("region_id"));
-		bar.setPrefectureId(rs.getString("prefecture_id"));
+		bar.setRegionId(rs.getInt("region_id"));
+		bar.setPrefectureId(rs.getInt("prefecture_id"));
 		return bar;
 	};
 	
@@ -35,6 +37,15 @@ public class TopRepository {
 		return template.query(sql, barRowMapper);
 	}
 	
+	/**
+	 * @param prefectureId　都道府県ID
+	 * @return 選択された都道府県の喫茶店情報
+	 */
+	public List<Bar> findByPrefectureId(Integer prefectureId) {
+		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id from bars WHERE prefecture_id = :prefectureId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("prefectureId", prefectureId);
+		return template.query(sql, param, barRowMapper);	
+	}
 	
 	
 	

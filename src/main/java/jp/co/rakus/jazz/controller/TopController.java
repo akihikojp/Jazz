@@ -13,7 +13,7 @@ import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.service.TopService;
 
 @Controller
-@RequestMapping
+@RequestMapping()
 public class TopController {
 	
 	@Autowired
@@ -32,17 +32,22 @@ public class TopController {
 	
 	@RequestMapping("/sample")
 	public String sample() {
-		topService.findJazzBar();
+		//topService.findAllBars();
 		return "sample";
 	}
 	
-	@RequestMapping("/")
+
+	/**
+	 * @return データベース情報(json形式)
+	 */
 	@ResponseBody
-	public String findAllBars(Model model, BarForm form) {
-		List<Bar> barList = topService.findAllBars();
-		//jsonで受け取る
-		
-		return null;
+	@RequestMapping("/ajax")
+	public List<Bar> findByPrefectureId(Integer prefectureId) {
+//		return topService.findByPrefectureId(2);
+		if(prefectureId == 0) {
+			return topService.findAllBars();
+		}
+		return topService.findByPrefectureId(prefectureId);
 	}
 	
 

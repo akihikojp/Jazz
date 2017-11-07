@@ -9,49 +9,35 @@
  * 8.結果をテーブルに出力
  */
 
+
+
 /**
  * 1:東京都内のジャズバー
- * 経度緯度取得後に、各データ毎にlat(緯度),lng(経度)が入ります。
+ * 経度緯度取得後に、各データ毎にlat(緯度),lng(経度)が入る。
  */
-var dataList = [
-		{
-			"name" : "いーぐる",
-		    "address": "新宿区四谷1-8"
-		},
-		{
-			"name" : "イントロ",
-			"address": "新宿区高田馬場2-14-8"
-		},
-		{
-			"name" : "シラムレン",
-			"address": "新宿歌舞伎町1-1-10新宿ゴールデン街G2通り2F"
-		},
-		{
-			"name" : "ダグ",
-			"address": "新宿区新宿3-15-12 B1"		
-		},
-		{
-			"name" : "ナルシス",
-			"address": "新宿区歌舞伎町1-13-6　YOビル2F"	
-		},
-		{
-			"name" : "直立猿人",
-			"address": "大田区西蒲田7-61-8"	
-		},
-		{
-			"name" : "六曜舎",
-			"address": "沖縄市照屋1-13-7"
-		},
-		{
-			"name" : "八尋家",
-			"address": "港区港南4町目6-4-1003"
-		},
-	];
+
+$(function() {
+	var pathName = location.pathname.split('/')[1];
+	var hostUrl = '/' + pathName;
+	var dataList = [];
 	
+	
+	$("#findBar").on('click', function(){
+		var selectVal = $("#select_prefecture").val(); //selectタグoptionの値を取得
+	$.ajax({
+		url :  hostUrl + '/ajax?prefectureId=' + selectVal,
+		dataType : 'json',
+		type : 'GET'
+	})
+	
+	.then(function(searchItems){
+		console.log("seiko");
+		dataList = searchItems;
+		console.log(searchItems);
+		
 		/**
 		 * 2.データリストの緯度経度を取得
 		 */
-$(function() {
 		function dfdGeocode(){
 			var dfd = $.Deferred();
 			
@@ -139,8 +125,8 @@ $(function() {
 	        $.each(dataList, function(i, data){
 	            html += '<tr>';
 	                html += '<td>'+(i+1)+'</td>';
-	                html += '<td><a href="https://maps.google.co.jp/maps?q='+ data.name + data.address +'&z=17&iwloc=A" target="_blank">';
-	                    html += data.name;
+	                html += '<td><a href="https://maps.google.co.jp/maps?q='+ data.nameJpa + data.address +'&z=17&iwloc=A" target="_blank">';
+	                    html += data.nameJpa;
 	                html += '</a></td>';
 	                html += '<td>'+data.distance+'km</td>';
 	            html += '</tr>';
@@ -192,6 +178,9 @@ $(function() {
 				}
 			return distance;
 			}
+		
+	},function(){});
+  });
 });
 
 		

@@ -76,6 +76,11 @@ public class TopService {
 
 
 	/** @return 全喫茶店情報 */
+	public List<Bar> findByPrefectureId(Integer prefectureId) {
+		return topRepository.findByPrefectureId(prefectureId);
+	}
+	
+	/**全件検索*/
 	public List<Bar> findAllBars() {
 		return topRepository.findAllBars();
 	}

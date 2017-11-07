@@ -26,64 +26,49 @@ public class Bar {
 	/** 電話番号 */
 	private String tel;
 	/** 地方(関東、近畿など) */
-	private String regionId;
+	private Integer regionId;
 	/** 都道府県 */
-	private String prefectureId;
-
+	private Integer prefectureId;
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getNameJpa() {
 		return nameJpa;
 	}
-
 	public void setNameJpa(String nameJpa) {
 		this.nameJpa = nameJpa;
 	}
-
 	public String getNameEng() {
 		return nameEng;
 	}
-
 	public void setNameEng(String nameEng) {
 		this.nameEng = nameEng;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public String getTel() {
 		return tel;
 	}
-
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
-	public String getRegionId() {
+	public Integer getRegionId() {
 		return regionId;
 	}
-
-	public void setRegionId(String regionId) {
+	public void setRegionId(Integer regionId) {
 		this.regionId = regionId;
 	}
-
-	public String getPrefectureId() {
+	public Integer getPrefectureId() {
 		return prefectureId;
 	}
-
-	public void setPrefectureId(String prefectureId) {
+	public void setPrefectureId(Integer prefectureId) {
 		this.prefectureId = prefectureId;
 	}
-
 }

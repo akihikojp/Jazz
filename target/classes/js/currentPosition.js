@@ -1,6 +1,6 @@
 /**
  * Googlemap上で現在地情報を取得する
- * latitude 緯度(赤道)
+ * latitude 緯度(横:赤道)
  * longitude 経度(縦)
  */
 $(function() {
