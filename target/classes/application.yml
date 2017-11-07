@@ -1,0 +1,15 @@
+spring:
+  mvc:
+    view:
+      prefix:  /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jazz?autoReconnect=true&useSSL=false
+    username: root
+    password: nasaroi7361
+server:
+  context-path: /jazz
+security:
+  basic:
+   enabled: false
