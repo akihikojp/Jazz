@@ -128,7 +128,7 @@ $(function() {
         $.each(dataList, function(i, data){
             html += '<tr>';
                 html += '<td>'+(i+1)+'</td>';
-                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.name+','+data.address+'&z=17&iwloc=A" target="_blank">';
+                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
                     html += data.nameJpa + '/' + data.nameEng;
                 html += '</a></td>';
                 html += '<td>'+data.distance+'km</td>';

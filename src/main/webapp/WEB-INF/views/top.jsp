@@ -100,7 +100,8 @@ body {
 				<div id="map"></div>
 </body>
 	<!-- GoogleMapを使う -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script>
+<!-- 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script>
 <script src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 </html>
 

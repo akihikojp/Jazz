@@ -1,5 +1,6 @@
 package jp.co.rakus.jazz.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,25 @@ public class TopController {
 			return topService.findAllBars();
 		}
 		return topService.findByPrefectureId(prefectureId);
+	}
+	
+	
+	
+	/**
+	 * JSON型でリターン
+	 * @return リスト形式の住所(全576件)
+	 */
+	@ResponseBody
+	@RequestMapping("/lat_lng")
+	public List<String> toFindLatANDLng() {
+		System.out.println("BAR総数:576");
+		List<String> barAddressList = new ArrayList<>();
+		List<Bar> barList = topService.findAllBars();
+		for(Bar bar : barList) {
+			String barAddress = bar.getAddress();
+			barAddressList.add(barAddress);
+		}
+		
+		return barAddressList;
 	}
 }

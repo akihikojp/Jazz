@@ -4,7 +4,11 @@
 </head>
 <body>
 						<fieldset>
-							<legend><i>JAZZ喫茶を検索する</i></legend>
+							<legend><i>JAZZ喫茶を検索する
+							<input type = submit value= "住所から緯度経度取得(仮配置)" id="findLatAndLng">
+							<!-- findLatAndLngボタンをonclickするとgetLatitude.jsのメソッドが動く -->
+							</i></legend>
+							
 							
 							<label for="distance">現在地からの距離で検索</label>
 							<br>
@@ -111,4 +115,5 @@
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
 </html>
