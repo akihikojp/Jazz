@@ -12,6 +12,11 @@
 	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 	 <!-- BootstrapのJS読み込み -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
+	<script src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/original.css" rel="stylesheet">
 

@@ -1,10 +1,6 @@
-/**サイトからコピペしてきた状態*/
-
 $(function() {
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
-	var tempDataList = []; 
-	var tempDataList2 = []; 
 	var dataList = []; // 緯度・経度設定済み
 
 	$("#findBar").on('click', function(){
@@ -19,11 +15,10 @@ $(function() {
 		type : 'GET'
 	})
 	.then(function(searchItems){
+		console.log('sample.js:' + searchItems)
 		//.push(追加する要素) : 配列に要素を追加するメソッド
 		dataList = searchItems;
 
-	
-	
 	
 ///////////////////////////////////////////////////////////
     // データリストの緯度経度を取得

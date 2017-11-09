@@ -32,7 +32,6 @@ public class TopController {
 
 	@RequestMapping("/sample")
 	public String sample() {
-		// topService.findAllBars();
 		return "sample";
 	}
 
@@ -53,19 +52,30 @@ public class TopController {
 	
 	/**
 	 * JSON型でリターン
-	 * @return リスト形式の住所(全576件)
+	 * @return リスト形式のJazzBar住所(全576件)
 	 */
 	@ResponseBody
 	@RequestMapping("/lat_lng")
 	public List<String> toFindLatANDLng() {
-		System.out.println("BAR総数:576");
 		List<String> barAddressList = new ArrayList<>();
-		List<Bar> barList = topService.findAllBars();
-		for(Bar bar : barList) {
+		
+//		//以下本番用。動作確認済み。
+//		List<Bar> barList = topService.findAllBars();
+//		for(Bar bar : barList) {
+//			String barAddress = bar.getAddress();
+//			barAddressList.add(barAddress);
+//		}
+//		return barAddressList;
+		
+		//以下、テスト用
+		List<Bar> testBarList = topService.findByPrefectureId(2);//青森：５件
+		for(Bar bar : testBarList) {
 			String barAddress = bar.getAddress();
 			barAddressList.add(barAddress);
 		}
-		
 		return barAddressList;
+		//以上、テスト用
+		
+		
 	}
 }

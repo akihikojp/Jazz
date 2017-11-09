@@ -1,8 +1,9 @@
 /**
- * 緯度と経度を取得するjs
- * geocodeとsirusiizuを使う.
+ * 緯度と経度を取得するjsを作成.
+ * geocodeAPIとsirusiizuライブラリを使う.
  */
 $(function(){
+	sirusiizu.initialize("mapCanvas");
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
 	
@@ -12,21 +13,14 @@ $(function(){
 			dataType : 'json',
 			type : 'GET'
 		})
-		.then(function(searchItems){
-			//addressList(576件)を配列で取得成功
-			console.log(searchItems);
-		
-		
-			
-			
-			
-			
+		.then(function(addressList){
+			console.log('★処理前');
+			sirusiizu.marking(addressList)
+			//sirusiizu.jsでnewしているので、こっちでも使える。
+//			console.log(sirusiizu.marking(addressList));
+			console.log('★処理後');
+						
 		},function(){});
-		
-		
-		
-		
-		
 		
 	});
 });
