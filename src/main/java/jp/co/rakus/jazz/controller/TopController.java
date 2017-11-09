@@ -14,27 +14,26 @@ import jp.co.rakus.jazz.service.TopService;
 @Controller
 @RequestMapping()
 public class TopController {
-	
+
 	@Autowired
 	private TopService topService;
-	
+
 	@ModelAttribute
-	public BarForm setUpForm(){
+	public BarForm setUpForm() {
 		return new BarForm();
 	}
-	
+
 	@RequestMapping("/top")
 	public String top() {
 		topService.findAllBars();
 		return "top";
 	}
-	
+
 	@RequestMapping("/sample")
 	public String sample() {
-		//topService.findAllBars();
+		// topService.findAllBars();
 		return "sample";
 	}
-	
 
 	/**
 	 * @return データベース情報(json形式)
@@ -42,12 +41,10 @@ public class TopController {
 	@ResponseBody
 	@RequestMapping("/ajax")
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
-//		return topService.findByPrefectureId(2);
-		if(prefectureId == 0) {
+		// return topService.findByPrefectureId(2);
+		if (prefectureId == 0) {
 			return topService.findAllBars();
 		}
 		return topService.findByPrefectureId(prefectureId);
 	}
-	
-
 }

@@ -1,6 +1,6 @@
 package jp.co.rakus.jazz.controller;
 
-/**喫茶店情報のフォーム */
+/** 喫茶店情報のフォーム */
 public class BarForm {
 	/** ID */
 	private String id;
@@ -16,6 +16,10 @@ public class BarForm {
 	private String regionId;
 	/** 都道府県 */
 	private String prefectureId;
+	/** 緯度 */
+	private String latitude;
+	/** 経度 */
+	private String longitude;
 
 	public String getId() {
 		return id;
@@ -71,6 +75,22 @@ public class BarForm {
 
 	public void setPrefectureId(String prefectureId) {
 		this.prefectureId = prefectureId;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 }

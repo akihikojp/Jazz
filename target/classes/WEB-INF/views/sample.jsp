@@ -45,7 +45,7 @@
 							<option value="1">北海道</option>
 							<option value="2">青森県</option>
 							<option value="3">岩手県</option>
-							<option value="4">宮城県</option>
+						 	<option value="4">宮城県</option>
 							<option value="5">秋田県</option>
 							<option value="6">山形県</option>
 							<option value="7">福島県</option>
@@ -101,7 +101,7 @@
         <thead>
             <tr>
                 <td width="150" align="center">順番</td>
-                <td width="150" align="center">店名</td>
+                <td width="300" align="center">店名</td>
                 <td width="150" align="center">現在地からの距離</td>
             </tr>
         </thead>

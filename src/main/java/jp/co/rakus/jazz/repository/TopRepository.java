@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.cj.api.io.Protocol.GetProfilerEventHandlerInstanceFunction;
+
 import jp.co.rakus.jazz.domain.Bar;
 
 @Repository
@@ -27,13 +29,16 @@ public class TopRepository {
 		bar.setTel(rs.getString("tel"));
 		bar.setRegionId(rs.getInt("region_id"));
 		bar.setPrefectureId(rs.getInt("prefecture_id"));
+		bar.setLatitude(rs.getInt("latitude"));
+		bar.setLongitude(rs.getInt("longitude"));
+		
 		return bar;
 	};
 	
 	
 	/** @return 全喫茶店情報 */
 	public List<Bar> findAllBars() {
-		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id from bars";
+		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id, latitude, longitude from bars";
 		return template.query(sql, barRowMapper);
 	}
 	
@@ -42,7 +47,7 @@ public class TopRepository {
 	 * @return 選択された都道府県の喫茶店情報
 	 */
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
-		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id from bars WHERE prefecture_id = :prefectureId";
+		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id, latitude, longitude from bars WHERE prefecture_id = :prefectureId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("prefectureId", prefectureId);
 		return template.query(sql, param, barRowMapper);	
 	}
