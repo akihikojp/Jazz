@@ -89,7 +89,7 @@ setCenter: function (index) {
 		map.setZoom(9);
 	}
 },
-				  //addressList?addr?
+
 marking: function (addressList, cb/**コールバック*/) {
 	var map = this.map;
 	var maxValue = 0;
@@ -120,9 +120,9 @@ marking: function (addressList, cb/**コールバック*/) {
 //	} else {
 //		addr = addressList.split("\n");
 //	}
-						//ch
+						
 	for (var i = 0; i < addressList.length; i++) {
-			//ch
+		
 		if (addressList[i] != "") {
 			this.address.push({
 				index: i,
@@ -136,7 +136,7 @@ marking: function (addressList, cb/**コールバック*/) {
 	if (this.address.length === 0) //addrに何も入ってなかった場合の処理。これがないとgeocodeが無限ループになる。
 		return;
 	
-	//ここにきてようやくxodeAddressが呼ばれる。
+	//ここにきてようやくcodeAddressが呼ばれる。
 	codeAddress(map, this.address, 0, this.callback)
 	return;
 
@@ -235,7 +235,6 @@ marking: function (addressList, cb/**コールバック*/) {
 			});
 		}
 	}
-	
 	
 					//境界を合わせるとかなんとかの処理
 					function fitBounds(map, address) {

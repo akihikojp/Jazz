@@ -11,17 +11,33 @@
 	 <!-- jQuery読み込み -->
 	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
 	 <!-- BootstrapのJS読み込み -->
+ 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y&amp;"></script>
+    	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
-	<script src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/original.css" rel="stylesheet">
+ 	
+ 	<!--以下の処理:参考URL:https://qiita.com/akippiko/items/a4c539934fa4df2fd5b5-->
+	<style>
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #mapCanvas {
+     		height: 50%;
+     		width: 90%;
+     		margin-top: 30px;
+     		margin-left: auto;
+     		margin-right: auto;
+     		display: block;
+     	}
+    </style>
 
 <title>全国Jazz喫茶マップ</title>
+</head>
 
+<header>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -50,20 +66,7 @@
 			<font size="4">あなたの今いる場所から最も近いJAZZ喫茶を見つけます。</font>
 			</div>
 
-			<div align="right">
-				<sec:authorize access="isAnonymous()">
-					<a href="${pageContext.request.contextPath}/login"
-						class="navbar-link">ログイン</a>&nbsp;&nbsp; 
-						</sec:authorize>
 
-				<sec:authorize access="isAuthenticated()">
-					<a href="${pageContext.request.contextPath}/update-userinfo"
-						class="navbar-link">登録情報</a>&nbsp;&nbsp;
-							<a href="${pageContext.request.contextPath}/logout"
-						class="navbar-link">ログアウト</a>
-				</sec:authorize>
-			</div>
-			</p>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>

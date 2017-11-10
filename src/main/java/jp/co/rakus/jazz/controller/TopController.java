@@ -1,5 +1,6 @@
 package jp.co.rakus.jazz.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.rakus.jazz.domain.Bar;
-import jp.co.rakus.jazz.service.TopService;
+import jp.co.rakus.jazz.domain.Prefecture;
+import jp.co.rakus.jazz.service.BarService;
+import jp.co.rakus.jazz.service.PrefectureService;
 
 @Controller
 @RequestMapping()
 public class TopController {
 
 	@Autowired
-	private TopService topService;
+	private BarService barService;
+	@Autowired
+	private PrefectureService prefectureService;
 
 	@ModelAttribute
 	public BarForm setUpForm() {
@@ -26,7 +31,7 @@ public class TopController {
 
 	@RequestMapping("/top")
 	public String top() {
-		topService.findAllBars();
+		barService.findAllBars();
 		return "top";
 	}
 
@@ -43,9 +48,9 @@ public class TopController {
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
 		// return topService.findByPrefectureId(2);
 		if (prefectureId == 0) {
-			return topService.findAllBars();
+			return barService.findAllBars();
 		}
-		return topService.findByPrefectureId(prefectureId);
+		return barService.findByPrefectureId(prefectureId);
 	}
 	
 	
@@ -60,7 +65,7 @@ public class TopController {
 		List<String> barAddressList = new ArrayList<>();
 		
 //		//以下本番用。動作確認済み。
-//		List<Bar> barList = topService.findAllBars();
+//		List<Bar> barList = barService.findAllBars();
 //		for(Bar bar : barList) {
 //			String barAddress = bar.getAddress();
 //			barAddressList.add(barAddress);
@@ -68,14 +73,22 @@ public class TopController {
 //		return barAddressList;
 		
 		//以下、テスト用
-		List<Bar> testBarList = topService.findByPrefectureId(2);//青森：５件
+		List<Bar> testBarList = barService.findByPrefectureId(2);//青森：５件
 		for(Bar bar : testBarList) {
 			String barAddress = bar.getAddress();
 			barAddressList.add(barAddress);
 		}
 		return barAddressList;
 		//以上、テスト用
+	}
+
+	@ResponseBody
+	@RequestMapping("/find_prefecture")
+	public List<Prefecture> prefectureInfo(){
+		List<Prefecture> prefectureList =  prefectureService.findAllPrefecture();
 		
+		return prefectureList;
 		
 	}
+		
 }

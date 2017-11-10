@@ -1,6 +1,5 @@
 package jp.co.rakus.jazz.repository;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.api.io.Protocol.GetProfilerEventHandlerInstanceFunction;
-
 import jp.co.rakus.jazz.domain.Bar;
 
 @Repository
-public class TopRepository {
+public class BarRepository {
 	
 	@Autowired
 	private NamedParameterJdbcTemplate template;

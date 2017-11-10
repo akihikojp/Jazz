@@ -1,24 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="common/common.jsp"%>
-
-</head>
+</header>
 
 <body background="img.jpg"/>
 <style>
-body {
-	background-image: url(img/jazz_bgd.jpg);
-	background-size: cover;
-	font-size: 15px;
-	}
+	body { 
+		background-image: url(img/jazz_bgd.jpg); 
+		background-size: cover; 
+		font-size: 15px; 
+	} 
 </style>
 
 <div class="container">
-		<div class="row">
+		<div class="row browser_box">
 			<div class="col-xs-12">
 				<div class="well">
 						
-						<fieldset>
-							<legend><i>JAZZ喫茶を検索する
+						<fieldset class="browser_box">
+							<legend style= text-align:center><i>JAZZ喫茶を検索する
 							<input type = submit value= "緯度経度検索(仮)" id="findLatAndLng">
 							<!-- findLatAndLngボタンをonclickするとgetLatitude.jsのメソッドが動く -->
 							</i></legend>
@@ -117,15 +116,10 @@ body {
 			</div>
 		</div>
 	</div>
-
-	<br>
-	<br>
-	<br>
-	<br>
 	
 	<!--  検索結果 -->
 	<div class="container">
-		<div class="row">
+		<div class="row browser_box">
 			<div class="col-xs-12">
 				<div class="well">
 					<form:form modelAttribute="bookForm" method="post" action="${pageContext.request.contextPath}/admin/confirm_page">
@@ -135,21 +129,21 @@ body {
 						</c:if>
 						
 						<fieldset>
-							<legend><i>検索結果</i></legend>
-							<!-- GoogleMapの表示 -->
-							<div id="map"></div>
+							<legend style= text-align:center><i>検索結果</i></legend>
+				
 							<!-- いくつかのピンが表示される。
 							ピンをクリックしたら、下にjsで動的な表示がされる。という実装にしたい。 -->
 							<br>
-							<table border=1 width="350">
+							<table align=center border=1 width="350">
 								 <tr><th colspan="2">喫茶店情報</th></tr>
 								 <tr><td align="center">店舗名:</td><td align="center">&nbsp;ゴールデンバー</td>
 								 <tr><td align="center">住所:</td><td align="center">&nbsp;東京都新宿区</td>
 								 <tr><td align="center">電話番号:</td><td align="center">&nbsp;0120-888-888</td>
 								 <tr><td align="center">評価:</td><td align="center">&nbsp;★★★</td>
-								 <tr><td align="center" >メモ:</td><td align="center">&nbsp;※↑ここ非同期でやりたい</td>						 
+								 <tr><td align="center" >メモ:</td><td align="center">&nbsp;※↑ここ非同期でやりたい</td>	
+								 <tr><td colspan="2"><input type=checkbox name="" value="check" align=center><i>お気に入りの店リストに追加する</i></td>					 
 							</table>
-							<input type=checkbox name="" value="check"><i>また行きたいリストに追加する</i>
+							
 							
 
 						</fieldset>
@@ -159,9 +153,11 @@ body {
 		</div>
 	</div>
 	
+	<!-- GoogleMapの表示 -->
+	<div id="mapCanvas" style="position: static"></div>
+							
+	
 	<br>
-				<!-- GoogleMapの表示 -->
-				<div id="map"></div>
 </body>
 </html>
 

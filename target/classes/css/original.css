@@ -5,3 +5,14 @@
      height: 240px;
      text-align: center;
 }
+
+
+.browser_box {
+     margin-top: 30px;
+     margin-left: auto;
+     margin-right: auto;
+     display: block;
+}
+
+
+
