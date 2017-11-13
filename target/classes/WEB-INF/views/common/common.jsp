@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/original.css" rel="stylesheet">
  	

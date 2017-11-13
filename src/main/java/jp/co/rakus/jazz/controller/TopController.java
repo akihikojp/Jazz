@@ -6,12 +6,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.domain.Prefecture;
+import jp.co.rakus.jazz.domain.Region;
 import jp.co.rakus.jazz.service.BarService;
 import jp.co.rakus.jazz.service.PrefectureService;
 
@@ -29,15 +31,16 @@ public class TopController {
 		return new BarForm();
 	}
 
+	/**都道府県と地域情報を取得した上でtop画面を表示.*/
 	@RequestMapping("/top")
-	public String top() {
+	public String top(Model model) {
 		barService.findAllBars();
+		List<Prefecture> prefectureList = prefectureService.findAllPrefecture();
+		List<Region> regionList = prefectureService.findAllRegion();
+		model.addAttribute("prefectureList", prefectureList);
+		model.addAttribute("regionList", regionList);
+		
 		return "top";
-	}
-
-	@RequestMapping("/sample")
-	public String sample() {
-		return "sample";
 	}
 
 	/**
@@ -46,7 +49,7 @@ public class TopController {
 	@ResponseBody
 	@RequestMapping("/ajax")
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
-		// return topService.findByPrefectureId(2);
+		// return topService.findByPrefectureId(2); 動作確認用
 		if (prefectureId == 0) {
 			return barService.findAllBars();
 		}
@@ -82,13 +85,23 @@ public class TopController {
 		//以上、テスト用
 	}
 
+	/**@return 都道府県情報(JSON形式)*/
 	@ResponseBody
 	@RequestMapping("/find_prefecture")
-	public List<Prefecture> prefectureInfo(){
-		List<Prefecture> prefectureList =  prefectureService.findAllPrefecture();
-		
+	public List<Prefecture> findPrefectureByRegionId(Integer regionId){
+		List<Prefecture> prefectureList =  prefectureService.findPrefectureByRegionId(regionId);
 		return prefectureList;
-		
 	}
+	
+
+	/**@return 地域情報(JSON形式)*/
+	@ResponseBody
+	@RequestMapping("/find-region")
+	public List<Region> findRegionByPrefectureId(Integer prefectureId){
+		List<Region> regionList = prefectureService.findRegionByPrefectureId(prefectureId);
+		return regionList;
+	}
+	
+	
 		
 }

@@ -15,7 +15,6 @@ $(function() {
 		type : 'GET'
 	})
 	.then(function(searchItems){
-		console.log('sample.js:' + searchItems)
 		//.push(追加する要素) : 配列に要素を追加するメソッド
 		dataList = searchItems;
 
