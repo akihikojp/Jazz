@@ -42,7 +42,7 @@
 							-->
 							
 							<select name="regionId" id="select_region" class="region_class">
-							<option value="0">地域一覧</option>
+							<option value="0">地域で検索</option>
 							<c:forEach var="region" items="${regionList}" varStatus="status">							
 								 <option value="${status.count}"><c:out value="${region.name}"/></option>
 							</c:forEach>
@@ -52,7 +52,7 @@
 							
 							<div>		
 								<select name="prefectureId" id="select_prefecture" class="prefecture_class">
-								 <option value="0">都道府県一覧</option> 
+								 <option value="0">都道府県で検索</option> 
 								 <c:forEach var="prefecture" items="${prefectureList}" varStatus="status">							
 								 	<option value="${status.count}"><c:out value="${prefecture.name}"/></option>
 								</c:forEach>
@@ -62,6 +62,7 @@
 								
 								<input type="button" value="検索" id="findBar">
 								<!-- findBarボタンのonclickでjsメソッドが動く -->
+								<input type="button" onclick="location.href='${pageContext.request.contextPath}/top'" value="リセット" >
 							</div>
 						</fieldset>
 						

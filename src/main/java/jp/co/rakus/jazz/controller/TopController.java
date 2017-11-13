@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sun.javafx.UnmodifiableArrayList;
+
 import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.domain.Prefecture;
 import jp.co.rakus.jazz.domain.Region;
@@ -89,18 +91,29 @@ public class TopController {
 	@ResponseBody
 	@RequestMapping("/find_prefecture")
 	public List<Prefecture> findPrefectureByRegionId(Integer regionId){
-		List<Prefecture> prefectureList =  prefectureService.findPrefectureByRegionId(regionId);
-		return prefectureList;
-	}
+		List<Prefecture> prefectureList = new ArrayList<>();
+		if(0 == regionId) {
+			prefectureList = prefectureService.findAllPrefecture();
+			return prefectureList;
+		} else {
+			prefectureList =  prefectureService.findPrefectureByRegionId(regionId);
+		}
+			return prefectureList;
+		}
 	
 
 	/**@return 地域情報(JSON形式)*/
 	@ResponseBody
 	@RequestMapping("/find-region")
 	public List<Region> findRegionByPrefectureId(Integer prefectureId){
-		List<Region> regionList = prefectureService.findRegionByPrefectureId(prefectureId);
-		return regionList;
-	}
+		List<Region> regionList = new ArrayList<>();
+		if(0 == prefectureId) {
+			regionList = prefectureService.findAllRegion();
+		} else {
+			regionList = prefectureService.findRegionByPrefectureId(prefectureId);
+		}
+			return regionList;
+		}
 	
 	
 		
