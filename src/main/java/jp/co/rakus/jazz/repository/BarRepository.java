@@ -48,14 +48,22 @@ public class BarRepository {
 		return template.query(sql, param, barRowMapper);	
 	}
 	
+	/**
+	 * @param RegionId　地域ID
+	 * @return 選択された地域の喫茶店情報
+	 */
+	public List<Bar> findByRegionId(Integer regionId) {
+		String sql = "SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id, latitude, longitude from bars WHERE region_id = :regionId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("regionId", regionId);
+		return template.query(sql, param, barRowMapper);	
+	}
 	
 	
 	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/
 	public void save(String address, double latitude, double longitude) {
 		String sql;
 		try {
-		sql = "UPDATE bars SET latitude = :latitude, longitude = :longitude"
-				+ " WHERE address = :address";
+		sql = "UPDATE bars SET latitude = :latitude, longitude = :longitude WHERE address = :address";
 		template.update(sql, new MapSqlParameterSource()
 							.addValue("latitude", latitude)
 							.addValue("longitude", longitude)

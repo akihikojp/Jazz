@@ -159,7 +159,7 @@ marking: function (addressList, cb/**コールバック*/) {
 					/**緯度・経度格納リスト*/
 					ajaxObjList.push({
 						address   : address[index].address,
-//						address : results[0],
+//いらんかも→	      		address : results[0],
 						latitude     : address[index].location.lat(),
 						longitude     : address[index].location.lng() 
 					});

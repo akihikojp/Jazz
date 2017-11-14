@@ -29,15 +29,12 @@ import jp.co.rakus.jazz.service.PrefectureService;
 @RequestMapping()
 public class TopController {
 
-	/**Bar情報のサービスクラス*/
-	@Autowired
+	@Autowired /**Bar情報のサービスクラス*/
 	private BarService barService;
-	/**都道府県情報のサービスクラス*/
-	@Autowired
+	@Autowired /**都道府県情報のサービスクラス*/
 	private PrefectureService prefectureService;
-	/**	JSONをオブジェクトに変換するためのクラス */
+	/**	JSONとJavaオブジェクトの相互変換ができるクラス */
 	private static ObjectMapper mapper = new ObjectMapper();
-	
 	
 
 	@ModelAttribute
@@ -45,77 +42,67 @@ public class TopController {
 		return new BarForm();
 	}
 
-	/**都道府県と地域情報を取得した上でtop画面を表示.*/
+	/**都道府県、地域を取得したのちに、top画面を表示*/
 	@RequestMapping("/top")
 	public String top(Model model) {
-		barService.findAllBars();
-		List<Prefecture> prefectureList = prefectureService.findAllPrefecture();
-		List<Region> regionList = prefectureService.findAllRegion();
-		model.addAttribute("prefectureList", prefectureList);
-		model.addAttribute("regionList", regionList);
+		//都道府県情報(北海道,青森...)
+		model.addAttribute("prefectureList", prefectureService.findAllPrefecture());
+		//地域情報(東北地方,関東地方...)
+		model.addAttribute("regionList", prefectureService.findAllRegion());
 		
 		return "top";
 	}
 
-	/**
-	 * @return データベース情報(json形式)
-	 */
+	/**@return データベース情報(json形式)*/
 	@ResponseBody
 	@RequestMapping("/ajax")
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
-		// return topService.findByPrefectureId(2); 動作確認用
+		//「都道府県を選択」タグのまま検索ボタンを押した時の動作
 		if (prefectureId == 0) {
 			return barService.findAllBars();
 		}
+		//検索したい都道府県を選択した時
 		return barService.findByPrefectureId(prefectureId);
 	}
 	
 	
 	
-	/**
-	 * JSON型でリターン
-	 * @return リスト形式のJazzBar住所(全576件)
-	 */
+	/** @return ジャズバー住所リスト(JSON型) */
 	@ResponseBody
 	@RequestMapping("/lat_lng")
-	public List<String> toFindLatANDLng() {
+	public List<String> toFindLatANDLng(Integer regionId) {
 		List<String> barAddressList = new ArrayList<>();
+		//LIMIT OFFSETで100件に分割する方法もあり? delayとか入れてみる?
 		
-		/**
-		 * LIMIT OFFSETで100件に分割する方法もあり?
-		 * delayとか入れてみる?
-		 **/
-		//以下本番用
-		List<Bar> barList = barService.findAllBars();
+//		//以下本番用
+//		List<Bar> barList = barService.findAllBars();
+//		for(Bar bar : barList) {
+//			//住所情報のみが入ってるリスト
+//			barAddressList.add(bar.getAddress());
+//		}
+//		return barAddressList;
+		
+		//これでいけるかな・・・？
+		List<Bar> barList =  barService.findByRegionId(regionId);
 		for(Bar bar : barList) {
 			String barAddress = bar.getAddress();
 			barAddressList.add(barAddress);
 		}
 		return barAddressList;
-		
-//		//以下、テスト
-//		List<Bar> testBarList = 
-//				//barService.findByPrefectureId(2);//青森：10件以下
-//				//barService.findByPrefectureId(1);//北海道：37件
-//				//barService.findByPrefectureId(13);//東京
-//		
-//		for(Bar bar : testBarList) {
-//			String barAddress = bar.getAddress();
-//			barAddressList.add(barAddress);
-//		}
-//		return barAddressList;
-		//以上、テスト用
 	}
 
+	
 	/**@return 都道府県情報(JSON形式)*/
 	@ResponseBody
 	@RequestMapping("/find_prefecture")
 	public List<Prefecture> findPrefectureByRegionId(Integer regionId){
 		List<Prefecture> prefectureList = new ArrayList<>();
+		//「地域を選択」タグのまま検索ボタンを押した時の動作
 		if(0 == regionId) {
 			prefectureList = prefectureService.findAllPrefecture();
 			return prefectureList;
 		} else {
+			//検索したい地域を選択した時
 			prefectureList =  prefectureService.findPrefectureByRegionId(regionId);
 		}
 			return prefectureList;
@@ -136,37 +123,33 @@ public class TopController {
 		}	
 	
 	/**
-	 * sirusiizu.jsで取得したJSON形式のデータを、DBに格納する
-	 * @param ajaxData jsで取得した緯度・経度データ
-	 * @return
-	 * @throws JsonParseException 
-	 * @throws JsonMappingException
-	 * @throws IOException
+	 * sirusiizu.jsで取得したJSON形式のデータをオブジェクトに変換し、DBに格納する
+	 * @param ajaxData  jsで取得した緯度・経度データ
+	 * @return DB格納が終わった後に表示されるmessage(sirusiizu.jsのメソッドの引数になってる!)
+	 * @throws JsonParseException, JsonMappingException, IOException
 	 */
 	@RequestMapping(value = "/register_lat_and_lng", method = RequestMethod.POST)
 	@ResponseBody
 	public String registerLatAndLng(String ajaxData) 
 				throws JsonParseException, JsonMappingException, IOException{
 
-		System.out.println("Controllerまで来ました。");
-		System.out.println("!!!!!!!!!!!!!!!!!!!" + ajaxData);
+		System.out.println("★★ajaxDataの中身:" + ajaxData);
 		
 		//JSONをオブジェクト型リストに変換
 		List<AjaxParameter> ajaxParameterList 
 		= mapper.readValue(ajaxData, new TypeReference<List<AjaxParameter>>() {});
-		System.out.println("ControllerTest: その2");
+		//JsonからBeanに変換:mapper.readValue
+		//BeanからJsonに変換:mapper.writeValue
 		String message = "";
-		int count = 0;
 		for (AjaxParameter ajaxParameter : ajaxParameterList) {
-			count++;
 			String address = ajaxParameter.getAddress();
 			double latitude = ajaxParameter.getLatitude();
 			double longitude = ajaxParameter.getLongitude();
 			barService.save(address,latitude,longitude);
-			System.out.println(count + "番目のデータ処理中。");
 		}
 		
-		if(message.equals("")) message = "正しくデータが更新されました"; 
+		//messageがsirusiizu.jsに渡って、alertで表示されるようになってる。
+		if(message.equals("")) message = "正しくデータが更新されました!"; 
 		return message;
 		}
 	

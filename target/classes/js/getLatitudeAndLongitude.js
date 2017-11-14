@@ -11,8 +11,9 @@ $(function() {
 	
 	// 住所から緯度・経度情報を取得し、MAPにピンを立てる。
 	$("#findLatAndLng").on('click', function() {
+		var selectVal = $("#update_region").val();//選択された地域ID 
 		$.ajax({
-			url : hostUrl + '/lat_lng',
+			url : hostUrl + '/lat_lng?regionId=' + selectVal,
 			dataType : 'json',
 			type : 'GET'
 		}).then(function(addressList) {
@@ -30,7 +31,10 @@ $(function() {
 		});
 	}); //end tag
 	
-}); //$のend tag
+}); //$(function)のend tag
+
+
+//外部化
 
 	// 緯度・経度情報が格納されたajaxObjをController側に渡して、DBに格納する為のメソッド.
 	function ajaxProcess(ajaxObj) {

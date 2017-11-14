@@ -18,8 +18,14 @@
 						
 						<fieldset class="browser_box">
 							<legend style= text-align:center><i>JAZZ喫茶を検索する
-							<input type = submit value= "緯度経度取得ボタン(管理者用)" id="findLatAndLng">
-							<!-- findLatAndLngボタンをonclickするとgetLatitude.jsのメソッドが動く -->
+							<select name="regionId" id="update_region" class="region_class">
+								<c:forEach var="region" items="${regionList}" varStatus="status">							
+									 <option value="${status.count}"><c:out value="${region.name}"/></option>
+								</c:forEach>
+							</select>
+							
+							<input type = submit value="緯度経度取得ボタン(管理者用)" id="findLatAndLng">
+							
 							</i></legend>
 							
 							<label for="distance">【検索条件を選択してください】</label>

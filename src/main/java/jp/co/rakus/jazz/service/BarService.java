@@ -15,14 +15,20 @@ public class BarService {
 	@Autowired
 	private BarRepository barRepository;
 
-	/** @return 全喫茶店情報 */
+	
+	/**全喫茶店検索*/
+	public List<Bar> findAllBars() {
+		return barRepository.findAllBars();
+	}
+	
+	/** @return 都道府県別 喫茶店情報 */
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
 		return barRepository.findByPrefectureId(prefectureId);
 	}
-	
-	/**全件検索*/
-	public List<Bar> findAllBars() {
-		return barRepository.findAllBars();
+
+	/** @return 地域別 喫茶店情報 */
+	public List<Bar> findByRegionId(Integer regionId) {
+		return barRepository.findByRegionId(regionId);
 	}
 	
 	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/
