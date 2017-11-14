@@ -20,6 +20,7 @@ $(function() {
 			console.log('★sirusiizu.marking:処理前');
 			sirusiizu.marking(addressList) // sirusiizu.js呼出し
 			console.log('★sirusiizu.marking:処理後');
+			console.log('★ajaxProcess:作動中');
 			
 			////////////////////////////////
 //			console.log('★ajaxProcess:処理前');
@@ -39,7 +40,6 @@ $(function() {
 	// 緯度・経度情報が格納されたajaxObjをController側に渡して、DBに格納する為のメソッド.
 	function ajaxProcess(ajaxObj) {
 		return new Promise(function(resolve, reject) {
-			console.log("test1:ajaxProcessメソッドは通過してる?");
 			$.ajax({
 				data : {ajaxData : JSON.stringify(ajaxObj)},
 				type : 'POST',

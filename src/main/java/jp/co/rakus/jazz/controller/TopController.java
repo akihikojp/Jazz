@@ -132,8 +132,6 @@ public class TopController {
 	@ResponseBody
 	public String registerLatAndLng(String ajaxData) 
 				throws JsonParseException, JsonMappingException, IOException{
-
-		System.out.println("★★ajaxDataの中身:" + ajaxData);
 		
 		//JSONをオブジェクト型リストに変換
 		List<AjaxParameter> ajaxParameterList 
