@@ -1,14 +1,13 @@
 package jp.co.rakus.jazz.repository;
 
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-
 import jp.co.rakus.jazz.domain.Bar;
 
 @Repository
@@ -51,6 +50,18 @@ public class BarRepository {
 	
 	
 	
-	
-
+	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/
+	public void save(String address, double latitude, double longitude) {
+		String sql;
+		try {
+		sql = "UPDATE bars SET latitude = :latitude, longitude = :longitude"
+				+ " WHERE address = :address";
+		template.update(sql, new MapSqlParameterSource()
+							.addValue("latitude", latitude)
+							.addValue("longitude", longitude)
+							.addValue("address", address));
+		}catch(Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

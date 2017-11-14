@@ -25,6 +25,11 @@ public class BarService {
 		return barRepository.findAllBars();
 	}
 	
+	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/
+	public void save(String address, double latitude, double longitude) {
+		barRepository.save(address, latitude, longitude);
+	}
+	
 	
 }
 

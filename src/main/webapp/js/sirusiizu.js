@@ -61,7 +61,7 @@ var sirusiizu = function () {
 sirusiizu.prototype = {
 clear: function () {
 	for (var i = 0; i < this.address.length; i++) {
-		//画面上のピンを消してるイメージ
+		//画面上のピンを消してるイメージ。
 		//これがないと、アップロードするたびに前回のピンが画面上に残ってしまう。
 		this.address[i].marker.setMap(null);
 		this.address[i].marker = null;
@@ -91,36 +91,12 @@ setCenter: function (index) {
 },
 
 marking: function (addressList, cb/**コールバック*/) {
+	var ajaxObjList = new Array();
 	var map = this.map;
 	var maxValue = 0;
 	this.callback = cb ? cb : {};
 	this.clear();
-	//ここで、ajaxOBJのリストを宣言する。
-	
-	
-	//★配列かどうかを判定してる。今回は、渡す住所が配列だと分かっているので不要。
-//	if ($.isArray(addressList)) { 
-//		if (addressList.length > 0 && $.isPlainObject(addressList[0])) {
-//			$.extend(this.address, addressList);
-//			if (this.address.length === 0) return;
-//			for (var i = 0; i < this.address.length; i++) {
-//				//latlngオブジェクトを取得し直さないと何故かエラーになる
-//				if (this.address[i].location) {
-//					this.address[i].location = new google.maps.LatLng(
-//						this.address[i].location.lat(), 
-//						this.address[i].location.lng()
-//					);
-//				}
-//				putMarker(map, this.address[i]);
-//			}
-//			fitBounds(map, this.address);
-//			return;
-//		}
-//		addr = addressList;
-//	} else {
-//		addr = addressList.split("\n");
-//	}
-						
+							
 	for (var i = 0; i < addressList.length; i++) {
 		
 		if (addressList[i] != "") {
@@ -133,14 +109,14 @@ marking: function (addressList, cb/**コールバック*/) {
 			});
 		}
 	}
+	
 	if (this.address.length === 0) //addrに何も入ってなかった場合の処理。これがないとgeocodeが無限ループになる。
 		return;
 	
-	//ここにきてようやくcodeAddressが呼ばれる。
-	codeAddress(map, this.address, 0, this.callback)
+													//緯度・経度情報格納リスト
+	codeAddress(map, this.address, 0, this.callback, ajaxObjList)
 	return;
 
-	
 	
 	//ピンたてを行うメソッド
 	function putMarker(map, addressList) {
@@ -165,11 +141,11 @@ marking: function (addressList, cb/**コールバック*/) {
 				infowindow.open(map, marker);
 			});
 		}
-	}
+	} //putMarkerメソッド
 
 	
 	//経度と緯度を算出するメソッド
-	function codeAddress(map, address, index, callback) {
+	function codeAddress(map, address, index, callback, addressList) {
 	var geocoder; //geocoder:住所情報を地理座標に変換するAPI.
 		if (!geocoder) {
 			geocoder = new google.maps.Geocoder();
@@ -179,7 +155,16 @@ marking: function (addressList, cb/**コールバック*/) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					address[index].location = results[0].geometry.location;
 					
-					//エラーがあったらコールバックする。要はエラー処理。
+					// DBに格納する経度・緯度情報(ピン情報)のオブジェクト生成
+					/**緯度・経度格納リスト*/
+					ajaxObjList.push({
+						address   : address[index].address,
+//いらんかも				address : results[0],
+						latitude     : address[index].location.lat(),
+						longitude     : address[index].location.lng() 
+					});
+					
+					//エラーがあったらコールバックする
 					if ("onGeocoded" in callback) {
 						callback["onGeocoded"](index, address[index]);
 					}
@@ -193,36 +178,30 @@ marking: function (addressList, cb/**コールバック*/) {
 					
 					//ピンたてメソッド
 					putMarker(map, address[index]);
-					
-					//indexの初期値0
 					index++;
+					
 					if (index < address.length) {
-						//tryCount = 3;　←失敗した時何回処理を行うか。いらないかも。
 						codeAddress(map, address, index, callback);
 					} else { 
 						//★全ての経度緯度が取得できたらここにくる.
-						
-						//エラーがあったらコールバックする.
 						if ("onGeocodeCompleted" in callback) {
 							callback["onGeocodeCompleted"](address);
 						}
-						//最後の処理(境界を合わせるとかなんとか・・・)
+						
 						fitBounds(map, address);
-					}
-					
-				//以下、statusがOKじゃなかった時の処理
-				} else {
+						
+						//ajaxProcessを呼出し
+						ajaxProcess(ajaxObjList)
+						.then(function(message) {
+							alert(message);
+						})
+						
+									
+					   }
+				} else {	//statusがOKじゃなかった時の処理
 					//使用制限を超過した場合に吐き出されるエラー文.
 					//1秒間に10件しか取得できないという制約がある.
 					if (status == "OVER_QUERY_LIMIT") {
-						//３回トライして、ダメだったら次の住所に移るというメソッド。
-						//今回は、できるまでやりたいのでここはコメントアウト
-	//					if (tryCount <= 0) {
-	//						address[index].error = status;
-	//						index++;
-	//						//tryCount = 3;
-	//						codeAddress(map, address, index, callback);
-	//					} else {
 							setTimeout(function(){
 								codeAddress(map, address, index, callback);
 							}, 2); //0.002sec待ってる
@@ -234,8 +213,8 @@ marking: function (addressList, cb/**コールバック*/) {
 				}
 			});
 		}
-	}
-	
+	}//codeAddressメソッド
+
 					//境界を合わせるとかなんとかの処理
 					function fitBounds(map, address) {
 						north = 0;
@@ -253,11 +232,8 @@ marking: function (addressList, cb/**コールバック*/) {
 						var northeast = new google.maps.LatLng(north, east);
 						var southwest = new google.maps.LatLng(south, west);
 						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
-					}
-				}
-					
-			}//end prototype
-
-		window.sirusiizu = new sirusiizu();  //ここでnewしている。
-
-	})();
+					} //fitBoundsメソッド		
+		} //marking : function
+} //sirusiizu.prototype	
+window.sirusiizu = new sirusiizu();  //ここでnewしている。
+})();

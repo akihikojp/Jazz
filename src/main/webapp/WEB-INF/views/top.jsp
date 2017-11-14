@@ -18,7 +18,7 @@
 						
 						<fieldset class="browser_box">
 							<legend style= text-align:center><i>JAZZ喫茶を検索する
-							<input type = submit value= "緯度経度検索(仮)" id="findLatAndLng">
+							<input type = submit value= "緯度経度取得ボタン(管理者用)" id="findLatAndLng">
 							<!-- findLatAndLngボタンをonclickするとgetLatitude.jsのメソッドが動く -->
 							</i></legend>
 							
