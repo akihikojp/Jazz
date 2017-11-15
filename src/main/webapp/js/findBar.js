@@ -123,19 +123,17 @@ $(function() {
         //上記でソートされたデータを10件ずつのリストに分ける
         var number = dataList.length; //ソートされたBar情報
         var cnt = 10; //表示は10件ずつにしたい
-//        var newDataList = []; //新しく作る配列
-	        //Math.ceil:引数として与えた数以上の最小の整数を返す
-	        for(var i = 0; i < Math.ceil(number / cnt); i++) {
+	        for(var i = 0; i < Math.ceil(number / cnt); i++) { //Math.ceil:引数として与えた数以上の最小の整数を返す
 	        	  var j = i * cnt;
 	        	  var p = dataList.slice(j, j + cnt); 	 // i*cnt 番目から i*cnt+cnt 番目まで取得
 	        	  newDataList.push(p);                    // 取得したものを newDataList に追加
 	        }
 	        
-        // データを出力
         var html =  "";
         
  ///////////////////////////
         
+    //ページングの実装
     	$('.bar_tag_yahiro').on('click', function(){
     		paginationNum = parseInt($(this).text()) - 1; //ページング番号【1】、配列【0】
     		console.log(paginationNum); //確認用
@@ -151,8 +149,6 @@ $(function() {
                 html += '<td>' + data.longitude.toFixed(3); + '</td>';
             html += '</tr>';
         });
-////////////////////////////
-    	
     	
        $("#data-list").append(html);
 
