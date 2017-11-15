@@ -16,7 +16,6 @@
 //            var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 //            // マップオプションを変数に格納
 //            var mapOptions = {
-//              zoom : 15,          // 拡大倍率
 //              center : mapLatLng  // 緯度・経度
 //            };
 //            // マップオブジェクト作成

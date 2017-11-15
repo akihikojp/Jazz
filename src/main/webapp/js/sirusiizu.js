@@ -61,13 +61,13 @@ var sirusiizu = function () {
 sirusiizu.prototype = {
 clear: function () {
 	for (var i = 0; i < this.address.length; i++) {
-		//画面上のピンを消してるイメージ。
-		//これがないと、アップロードするたびに前回のピンが画面上に残ってしまう。
+		//画面上のピンを都度消してるイメージ
+		//これがないと、アップロードするたびに前回のピンが画面上に残ってしまう
 		this.address[i].marker.setMap(null);
 		this.address[i].marker = null;
 		this.address[i].location = null;
 	}
-	//addressオブジェクトの初期化。上の処理とは少し趣が違う。nullと初期化の違いを整理しよう。
+	//addressオブジェクトの初期化。上の処理とは少し趣が違う。nullと初期化の違いを整理しよう
 	this.address = [];
 },
 
@@ -215,7 +215,7 @@ marking: function (addressList, cb/**コールバック*/) {
 		}
 	}//codeAddressメソッド
 
-					//境界を合わせるとかなんとかの処理
+					//境界を合わせる処理
 					function fitBounds(map, address) {
 						north = 0;
 						east  = 0;
@@ -232,8 +232,9 @@ marking: function (addressList, cb/**コールバック*/) {
 						var northeast = new google.maps.LatLng(north, east);
 						var southwest = new google.maps.LatLng(south, west);
 						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
-					} //fitBoundsメソッド		
-		} //marking : function
-} //sirusiizu.prototype	
-window.sirusiizu = new sirusiizu();  //ここでnewしている。
+					} //end:fitBoundsメソッド		
+		} //end:marking : function
+} //end:sirusiizu.prototype	
+
+window.sirusiizu = new sirusiizu();  //ここでnewしてる
 })();

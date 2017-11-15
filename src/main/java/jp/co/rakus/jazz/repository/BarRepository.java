@@ -25,9 +25,8 @@ public class BarRepository {
 		bar.setTel(rs.getString("tel"));
 		bar.setRegionId(rs.getInt("region_id"));
 		bar.setPrefectureId(rs.getInt("prefecture_id"));
-		bar.setLatitude(rs.getInt("latitude"));
-		bar.setLongitude(rs.getInt("longitude"));
-		
+		bar.setLatitude(rs.getDouble("latitude"));
+		bar.setLongitude(rs.getDouble("longitude"));	
 		return bar;
 	};
 	

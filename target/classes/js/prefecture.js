@@ -13,7 +13,7 @@ $(function(){
 		})
 		.then(function(prefectures){
 			$('#select_prefecture').empty(); //.empty()で、<option>情報を空っぽにする。.remove()はダメだった。
-			//$('#select_prefecture').append($('<option>').html('この地域のJazz喫茶を全て検索する').val(0));
+			$('#select_prefecture').append($('<option>').html('この地方で全検索').val(0));
 			$.each(prefectures, function(index,value){
 				$('#select_prefecture').append($('<option>').html(value.name).val(value.id));  //値は都道府県ID
 			})
@@ -36,7 +36,7 @@ $(function(){
 		var selectVal = $("#select_prefecture").val();//選択された都道府県のidを取得 
 		$.ajax({
 			//該当する地域を取得するメソッドが動く.
-			url :  hostUrl + '/find-region?prefectureId=' + selectVal,
+			url :  hostUrl + '/find_region?prefectureId=' + selectVal,
 			dataType : 'json',
 			type : 'GET'
 		})

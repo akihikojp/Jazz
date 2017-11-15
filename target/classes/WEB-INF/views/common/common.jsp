@@ -14,7 +14,7 @@
  	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y&amp;"></script>
     	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/findBar.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>

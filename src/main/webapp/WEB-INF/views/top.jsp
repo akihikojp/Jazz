@@ -21,7 +21,7 @@ body {
 						<i>JAZZ喫茶を検索する </i>
 					</legend>
 
-					<label for="distance">【検索条件を選択してください】</label> <br>
+					<label for="distance">【どこのjazz喫茶に行きますか?】</label> <br>
 					<!--   		距離:<select id="distance" name="distance">
 							<option value="1">1km以内</option>
 							<option value="5">5km以内</option>
@@ -40,7 +40,7 @@ body {
 							-->
 
 					<select name="regionId" id="select_region" class="region_class">
-						<option value="0">地域で検索</option>
+						<option value="0">地域</option>
 						<c:forEach var="region" items="${regionList}" varStatus="status">
 							<option value="${status.count}"><c:out value="${region.name}"/></option>
 						</c:forEach>
@@ -49,16 +49,16 @@ body {
 					<div>
 						<select name="prefectureId" id="select_prefecture"
 							class="prefecture_class">
-							<option value="0">都道府県で検索</option>
+							<option value="0">都道府県</option>
 							<c:forEach var="prefecture" items="${prefectureList}"
 								varStatus="status">
 								<option value="${status.count}"><c:out value="${prefecture.name}"/></option>
 							</c:forEach>
-						</select> <br> <input type="button" value="検索" id="findBar">
-						<!-- findBarボタンのonclickでjsメソッドが動く -->
-						<input type="button"
-							onclick="location.href='${pageContext.request.contextPath}/top'"
-							value="リセット">
+						</select> 
+					<br> 
+					
+						<input type="button" value="検索" id="findBar">
+						<input type="button" onclick="location.href='${pageContext.request.contextPath}/top'" value="リセット">
 					</div>
 				</fieldset>
 
@@ -68,9 +68,12 @@ body {
 				<table border="1">
 					<thead>
 						<tr>
-							<td width="150" align="center">順番</td>
+							<td width="150" align="center">距離の近い順</td>
 							<td width="300" align="center">店名</td>
-							<td width="150" align="center">現在地からの距離</td>
+							<td width="200" align="center">現在地からの距離</td>
+							<td width="130" align="center">緯度</td>
+							<td width="130" align="center">経度</td>
+							
 						</tr>
 					</thead>
 					<tbody id="data-list" align="center"></tbody>
@@ -81,7 +84,11 @@ body {
 		</div>
 	</div>
 </div>
-
+				
+				<!-- GoogleMapの表示 -->
+				<div id="mapCanvas" style="position: static"></div>
+				
+				
 <!--  検索結果 -->
 <div class="container">
 	<div class="row browser_box">
@@ -96,7 +103,7 @@ body {
 
 					<fieldset>
 						<legend style="text-align: center">
-							<i>検索結果</i>
+							<i>クリックしたピンの詳細情報</i>
 						</legend>
 
 						<!-- いくつかのピンが表示される。
@@ -136,23 +143,23 @@ body {
 </div>
 
 
-<div class="container">
-	<div class="row browser_box">
-		<div class="col-xs-12">
-			<div class="well">
-				<!--選択した地域の住所情報から経度・緯度を抽出し、DBに格納 -->
-				<select name="regionId" id="update_region" class="region_class">
-					<c:forEach var="region" items="${regionList}" varStatus="status">
-						<option value="${status.count}"><c:out value="${region.name}"/></option>
-					</c:forEach>
-				</select> <input type=submit value="緯度経度取得ボタン(管理者用)" id="findLatAndLng">
-			</div>
-		</div>
-	</div>
-</div>
 
-<!-- GoogleMapの表示 -->
-<div id="mapCanvas" style="position: static"></div>
+				<div class="container">
+					<div class="row browser_box">
+						<div class="col-xs-12">
+							<div class="well">
+								<!--選択した地域の住所情報から経度・緯度を抽出し、DBに格納 -->
+								<select name="regionId" id="update_region" class="region_class">
+									<c:forEach var="region" items="${regionList}" varStatus="status">
+										<option value="${status.count}"><c:out value="${region.name}"/></option>
+									</c:forEach>
+								</select> <input type=submit value="緯度経度取得ボタン(管理者用)" id="findLatAndLng">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
 
 
 <br>

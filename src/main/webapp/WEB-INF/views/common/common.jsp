@@ -14,7 +14,7 @@
  	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y&amp;"></script>
     	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sample.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/findBar.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
@@ -27,7 +27,7 @@
         body { height: 100%; margin: 0; padding: 0 }
         #mapCanvas {
      		height: 50%;
-     		width: 90%;
+     		width: 80%;
      		margin-top: 30px;
      		margin-left: auto;
      		margin-right: auto;
