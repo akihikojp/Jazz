@@ -25,20 +25,10 @@ public class BarService {
 	public List<Bar> findByPrefectureId(Integer prefectureId) {
 		return barRepository.findByPrefectureId(prefectureId);
 	}
-	
-	/** @return 都道府県ver.(ページング番号に準じた10件数の喫茶店情報)*/
-	public List<Bar> findByPrefectureIdOFFSET(Integer prefectureId, Integer pageNum){
-		return barRepository.findByPrefectureIdOFFSET(prefectureId, pageNum);
-	}
-	
 
 	/** @return 地域別 喫茶店情報 */
 	public List<Bar> findByRegionId(Integer regionId) {
 		return barRepository.findByRegionId(regionId);
-	}
-	
-	public List<Bar> findByRegionIdOFFSET(Integer regionId, Integer pageNum){
-		return barRepository.findByRegionIdOFFSET(regionId, pageNum);
 	}
 	
 	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/

@@ -4,13 +4,10 @@ package jp.co.rakus.jazz.repository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.ls.LSException;
 
 import jp.co.rakus.jazz.domain.Bar;
 
@@ -51,19 +48,6 @@ public class BarRepository {
 		return template.query(sql, param, barRowMapper);	
 		}
 	
-	/**
-	 * @param pageNum ページングの番号
-	 * @return ページング番号に準じた10件の情報
-	 */
-	public List<Bar> findByPrefectureIdOFFSET(Integer prefectureId, Integer pageNum){
-		Integer offsetNum = pageNum * 10 - 9;
-		String sql = 
-				"SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id, latitude, longitude from bars WHERE prefecture_id = :prefectureId "
-				+ "limit" + offsetNum + ",10";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("prefectureId", prefectureId);
-		return template.query(sql, param, barRowMapper);	
-	}
-	
 	
 	/**
 	 * @param regionId　地域ID
@@ -74,22 +58,6 @@ public class BarRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("regionId", regionId);
 		return template.query(sql, param, barRowMapper);	
 	}
-	
-	/**
-	 * @param pageNum ページングの番号
-	 * @return ページング番号に準じた10件の情報
-	 */
-	public List<Bar> findByRegionIdOFFSET(Integer regionId, Integer pageNum){
-		Integer offsetNum = pageNum * 10 - 9;
-		String sql = 
-				"SELECT id, name_jpa, name_eng, address, tel, region_id, prefecture_id, latitude, longitude from bars WHERE region_id = :regionId "
-				+ "limit" + offsetNum + ",10";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("regionId", regionId);
-		return template.query(sql, param, barRowMapper);	
-		
-	}
-	
-	
 	
 	
 	/**緯度・経度情報の更新処理 @param address,latitude,longitude*/
