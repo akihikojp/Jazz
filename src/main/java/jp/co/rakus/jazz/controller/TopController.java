@@ -54,8 +54,8 @@ public class TopController {
 
 	/** @return データベース情報(json形式) */
 	@ResponseBody
-	@RequestMapping("/find_bar")
-	public String findByPrefectureId(Integer regionId, Integer prefectureId) {
+	@RequestMapping("/find_bar")                                         
+	public String findBarBySomeId(Integer regionId, Integer prefectureId) {
 		if (regionId != 0 && prefectureId == 0) { // 地域IDのみ選択し、都道府県は全選択にした場合
 			return JSON.encode(barService.findByRegionId(regionId));
 		} else if (prefectureId != 0) { // 都道府県IDを選択した場合(地域IDも自動的に入る)
@@ -67,7 +67,7 @@ public class TopController {
 	/** @return ジャズバー住所リスト(JSON型) */
 	@ResponseBody
 	@RequestMapping("/lat_lng")
-	public List<String> toFindLatANDLng(Integer regionId) {
+	public List<String> toFindLatANDLng(Integer regionId, Integer pageNum/**nullのままでおｋ*/) {
 		List<String> barAddressList = new ArrayList<>();
 
 		// 管理者権限において、選択した地域IDの緯度・経度情報を取得する

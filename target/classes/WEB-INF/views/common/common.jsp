@@ -27,7 +27,7 @@
         body { height: 100%; margin: 0; padding: 0 }
         #mapCanvas {
      		height: 50%;
-     		width: 90%;
+     		width: 80%;
      		margin-top: 30px;
      		margin-left: auto;
      		margin-right: auto;

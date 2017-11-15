@@ -21,7 +21,7 @@ body {
 						<i>JAZZ喫茶を検索する </i>
 					</legend>
 
-					<label for="distance">【どこのjazz喫茶を選択しますか？】</label> <br>
+					<label for="distance">【どこのjazz喫茶に行きますか?】</label> <br>
 					<!--   		距離:<select id="distance" name="distance">
 							<option value="1">1km以内</option>
 							<option value="5">5km以内</option>
@@ -37,16 +37,15 @@ body {
 							</select>
 							<input type="submit" value="検索">
 							<br>
-							-->
-
+						-->
+					<div>
 					<select name="regionId" id="select_region" class="region_class">
 						<option value="0">地域</option>
 						<c:forEach var="region" items="${regionList}" varStatus="status">
 							<option value="${status.count}"><c:out value="${region.name}"/></option>
 						</c:forEach>
-					</select> <br>
-
-					<div>
+					</select>
+					
 						<select name="prefectureId" id="select_prefecture"
 							class="prefecture_class">
 							<option value="0">都道府県</option>
@@ -68,22 +67,50 @@ body {
 				<table border="1">
 					<thead>
 						<tr>
-							<td width="150" align="center">順番</td>
+							<td width="150" align="center">距離の近い順</td>
 							<td width="300" align="center">店名</td>
-							<td width="150" align="center">現在地からの距離</td>
-							<td width="150" align="center">緯度・経度</td>
-							
+							<td width="200" align="center">現在地からの距離</td>
+							<td width="130" align="center">緯度</td>
+							<td width="130" align="center">経度</td>		
 						</tr>
 					</thead>
 					<tbody id="data-list" align="center"></tbody>
 				</table>
+				
+				<nav aria-label="Page navigation">
+					  <ul class="pagination jazz_bar_pagination">
+					    		<li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    
+						    <li class="bar_tag_yahiro"><a>1</a></li>
+						    <li class="bar_tag_yahiro"><a>2</a></li>
+						    <li class="bar_tag_yahiro"><a>3</a></li>
+						    <li class="bar_tag_yahiro"><a>4</a></li>
+						    <li class="bar_tag_yahiro"><a>5</a></li>
+						    
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+					    		</li>
+					  </ul>
+				</nav>
+
+
 				<br>
 
 			</div>
 		</div>
 	</div>
 </div>
-
+				
+				<!-- GoogleMapの表示 -->
+				<div id="mapCanvas" style="position: static"></div>
+				
+				
 <!--  検索結果 -->
 <div class="container">
 	<div class="row browser_box">
@@ -138,6 +165,7 @@ body {
 </div>
 
 
+
 				<div class="container">
 					<div class="row browser_box">
 						<div class="col-xs-12">
@@ -153,8 +181,7 @@ body {
 					</div>
 				</div>
 
-				<!-- GoogleMapの表示 -->
-				<div id="mapCanvas" style="position: static"></div>
+				
 
 
 <br>

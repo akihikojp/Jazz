@@ -2,6 +2,8 @@ $(function() {
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
 	var dataList = []; // 緯度・経度設定済み
+	var paginationNum = 0; //ページング用の宣言
+    var newDataList = []; //ページング用の配列
 
 	$("#findBar").on('click', function(){
 		var selectRegionVal = $("#select_region").val();  //地域ID
@@ -106,34 +108,52 @@ $(function() {
 
         // 現在地
         var coords = position.coords;
-
+        
         // 距離の割り出しを行ない、各データにdistance属性を設定
         $.each(dataList, function(i, data){
-        		/**DBに緯度・経度情報を入れたおかげで、getDistanceメソッドを走らせるだけでよくなった!↓*/
-            //data.distance = getDistance(data.lat, data.lng, coords.latitude, coords.longitude, 0) / 1000; //kmで算出
+        		/**DBに緯度・経度情報を入れたおかげで、getDistanceメソッドを走らせるだけでおｋ*/
             data.distance = getDistance(data.latitude, data.longitude, coords.latitude, coords.longitude, 0) / 1000; //kmで算出
         });
 
         // 現在地からの距離が小さい順にソート
         dataList.sort(function(a, b){
-            return (a.distance < b.distance) ? -1 : 1;
+        	return (a.distance < b.distance) ? -1 : 1;
         });
-
+        
+        //上記でソートされたデータを10件ずつのリストに分ける
+        var number = dataList.length; //ソートされたBar情報
+        var cnt = 10; //表示は10件ずつにしたい
+//        var newDataList = []; //新しく作る配列
+	        //Math.ceil:引数として与えた数以上の最小の整数を返す
+	        for(var i = 0; i < Math.ceil(number / cnt); i++) {
+	        	  var j = i * cnt;
+	        	  var p = dataList.slice(j, j + cnt); 	 // i*cnt 番目から i*cnt+cnt 番目まで取得
+	        	  newDataList.push(p);                    // 取得したものを newDataList に追加
+	        }
+	        
         // データを出力
         var html =  "";
-
-        $.each(dataList, function(i, data){
+        
+ ///////////////////////////
+        
+    	$('.bar_tag_yahiro').on('click', function(){
+    		paginationNum = parseInt($(this).text()) - 1; //ページング番号【1】、配列【0】
+    		console.log(paginationNum); //確認用
+    })  
+        $.each(newDataList[paginationNum], function(i, data){
             html += '<tr>';
                 html += '<td>'+(i+1)+'</td>';
                 html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
-                    html += data.nameJpa;
+                html += data.nameJpa;
                 html += '</a></td>';
                 html += '<td>'+data.distance+'km</td>';
-                html += '<td>' + data.latitude.toFixed(3); + '</td>';
+                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
                 html += '<td>' + data.longitude.toFixed(3); + '</td>';
             html += '</tr>';
         });
-
+////////////////////////////
+    	
+    	
        $("#data-list").append(html);
 
     })

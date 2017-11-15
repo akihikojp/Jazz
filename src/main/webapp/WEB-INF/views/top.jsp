@@ -37,16 +37,15 @@ body {
 							</select>
 							<input type="submit" value="検索">
 							<br>
-							-->
-
+						-->
+					<div>
 					<select name="regionId" id="select_region" class="region_class">
 						<option value="0">地域</option>
 						<c:forEach var="region" items="${regionList}" varStatus="status">
 							<option value="${status.count}"><c:out value="${region.name}"/></option>
 						</c:forEach>
-					</select> <br>
-
-					<div>
+					</select>
+					
 						<select name="prefectureId" id="select_prefecture"
 							class="prefecture_class">
 							<option value="0">都道府県</option>
@@ -72,12 +71,35 @@ body {
 							<td width="300" align="center">店名</td>
 							<td width="200" align="center">現在地からの距離</td>
 							<td width="130" align="center">緯度</td>
-							<td width="130" align="center">経度</td>
-							
+							<td width="130" align="center">経度</td>		
 						</tr>
 					</thead>
 					<tbody id="data-list" align="center"></tbody>
 				</table>
+				
+				<nav aria-label="Page navigation">
+					  <ul class="pagination jazz_bar_pagination">
+					    		<li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    
+						    <li class="bar_tag_yahiro"><a>1</a></li>
+						    <li class="bar_tag_yahiro"><a>2</a></li>
+						    <li class="bar_tag_yahiro"><a>3</a></li>
+						    <li class="bar_tag_yahiro"><a>4</a></li>
+						    <li class="bar_tag_yahiro"><a>5</a></li>
+						    
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+					    		</li>
+					  </ul>
+				</nav>
+
+
 				<br>
 
 			</div>
