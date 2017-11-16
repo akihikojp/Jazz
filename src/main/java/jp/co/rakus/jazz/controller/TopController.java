@@ -3,7 +3,6 @@ package jp.co.rakus.jazz.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jp.co.rakus.jazz.domain.AjaxParameter;
 import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.domain.Prefecture;
@@ -44,26 +41,42 @@ public class TopController {
 	/** 都道府県、地域を取得したのちに、top画面を表示 */
 	@RequestMapping("/top")
 	public String top(Model model) {
-		// 都道府県情報(北海道,青森...)
-		model.addAttribute("prefectureList", prefectureService.findAllPrefecture());
-		// 地域情報(東北地方,関東地方...)
-		model.addAttribute("regionList", prefectureService.findAllRegion());
-
+		model.addAttribute("prefectureList", prefectureService.findAllPrefecture()); // 都道府県情報(北海道,青森...)
+		model.addAttribute("regionList", prefectureService.findAllRegion());		   // 地域情報(東北地方,関東地方...)
 		return "top";
 	}
 
-	/** @return データベース情報(json形式) */
+	/** @return 検索条件に合致したBarオブジェクトのリスト(json形式) */
 	@ResponseBody
 	@RequestMapping("/find_bar")                                         
 	public String findBarBySomeId(Integer regionId, Integer prefectureId) {
+		List<Bar> barList = new ArrayList<>();
 		if (regionId != 0 && prefectureId == 0) { // 地域IDのみ選択し、都道府県は全選択にした場合
-			return JSON.encode(barService.findByRegionId(regionId));
+			barList = barService.findByRegionId(regionId);
+			return JSON.encode(barList);
+			
 		} else if (prefectureId != 0) { // 都道府県IDを選択した場合(地域IDも自動的に入る)
-			return JSON.encode(barService.findByPrefectureId(prefectureId));
+			barList = barService.findByPrefectureId(prefectureId);
+			return JSON.encode(barList);
 		} else // if(regionId == 0 && prefectureId == 0) { //未選択の場合
 			return null;
 	}
 
+	
+//	/**ページング数をmodelに詰めるメソッド*/
+//	@ResponseBody
+//	@RequestMapping("/paging_number")
+//	public String calculatePagingNumber(List<Bar> barList) {
+//		Integer barNum = barList.size();
+//		List<Integer> pagingNumberList = new ArrayList<>();
+//		Integer numOfPaging = barNum / 10; //パターン1 : 10で割り切sれる数(50)だったら、それ(=5)がページング数になる
+//		if (barNum % 10 != 0) numOfPaging = numOfPaging + 1; //パターン2 : 10で割り切れない数(53)だったら、それ+1(=6)がページング数になる
+//		for(int i = 1; i <= numOfPaging; i++) pagingNumberList.add(i);  //Listにページ番号を格納
+//		
+//		return JSON.encode(pagingNumberList);
+//	}
+
+	
 	/** @return ジャズバー住所リスト(JSON型) */
 	@ResponseBody
 	@RequestMapping("/lat_lng")
