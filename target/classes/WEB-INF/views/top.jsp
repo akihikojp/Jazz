@@ -85,15 +85,19 @@ body {
 						      </a>
 						    </li>
 						    
-<%-- 						     <c:forEach begin="1" items="${pagingNumberList}" varStatus="status">
+						    <!-- この処理js側でやろう -->
+ 		<!-- 				     <c:forEach begin="1" items="${pagingNumberList}" varStatus="status">
 							　<li class="bar_tag_yahiro"><a><c:out value="${status.index}"/></a></li>
-							</c:forEach> --%>
+							</c:forEach>  -->
 							
- 					   	    <li class="bar_tag_yahiro"><a></a></li>
-<!-- 							<li class="bar_tag_yahiro"><a>2</a></li>
+ 					   	  	  <li class="bar_tag_yahiro"><a>1</a></li>
+ 					   	   	  <li class="bar_tag_yahiro"><a>2</a></li>
+ 					   	      <li class="bar_tag_yahiro"><a>3</a></li>
+ 					   	      
+<!--  						<li class="bar_tag_yahiro"><a>2</a></li>
 						    <li class="bar_tag_yahiro"><a>3</a></li>
 						    <li class="bar_tag_yahiro"><a>4</a></li>
-						    <li class="bar_tag_yahiro"><a>5</a></li> -->
+						    <li class="bar_tag_yahiro"><a>5</a></li>  -->
 						    
 						    <li>
 						      <a href="#" aria-label="Next">

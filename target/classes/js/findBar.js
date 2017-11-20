@@ -10,19 +10,24 @@ $(function() {
 		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
 		if(selectRegionVal == 0 && selectPrefectureVal == 0){// 両方のタグが未選択だった場合の処理
 			alert('地域か都道府県は必ず選択してください!');
-		}
-		
+		}		
 		$.ajax({
 		url :  hostUrl + '/find_bar?regionId=' + selectRegionVal + '&prefectureId=' + selectPrefectureVal,
 		// regionIdとprefectureIdの2つの値が渡される.
 		dataType : 'json',
 		type : 'GET'
-	})
+		})
+		
+		$.ajax({
+		url :  hostUrl + '/pagenationNum?pagenationNum=' + pagenationNum,
+		dataType : 'json',
+		type : 'GET'
+		})
+	
 	.then(function(searchItems){
-		calculatePageNum(searchItems);
+		calculatePageNum(searchItems); //パージ数を検索するメソッド
 		
 		dataList = searchItems;
-		console.log('データ数は' + dataList.length);
 		
 		
 		
@@ -41,6 +46,7 @@ $(function() {
         	for(var i = 1; i <= numOfPage; i++){
         		pagenationArray.push(i);
         	}
+        	
         	$('.bar_tag_yahiro').empty();
         	$.each(pagenationArray, function(i, page){
         		pageNum = i + 1; //配列は0からページは1から
@@ -53,26 +59,26 @@ $(function() {
 	        	
 	        }
         
-////////////////////////////////////////////////したけすーーーーーーーーーーーーーーーーーー
-	    function appendHTML(dataList, pagenationNum){
-	        var html =  "";
-	        $("#data-list").empty();
-	    		$.each(dataList[pagenationNum], function(i, data){
-	            html += '<tr>';
-	                html += '<td>'+(i+1)+'</td>';
-	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
-	                html += data.nameJpa;
-	                html += '</a></td>';
-	                html += '<td>'+data.distance+'km</td>';
-	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
-	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
-	            html += '</tr>';
-	        }); //eachのendPoint
-	    		
-	    		   $("#data-list").append(html);
-	    		   html = "";
-	    };
-///////////////////////////////////////////////うえけすーーーーーーーーーーーーーー
+//////////////////////////////////////////////////したけすーーーーーーーーーーーーーーーーーー
+//	    function appendHTML(dataList, pagenationNum){
+//	        var html =  "";
+//	        $("#data-list").empty();
+//	    		$.each(dataList[pagenationNum], function(i, data){
+//	            html += '<tr>';
+//	                html += '<td>'+(i+1)+'</td>';
+//	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
+//	                html += data.nameJpa;
+//	                html += '</a></td>';
+//	                html += '<td>'+data.distance+'km</td>';
+//	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
+//	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
+//	            html += '</tr>';
+//	        }); //eachのendPoint
+//	    		
+//	    		   $("#data-list").append(html);
+//	    		   html = "";
+//	    };
+/////////////////////////////////////////////////うえけすーーーーーーーーーーーーーー
         
     // データが揃った段階でソートを開始
     $.when(
@@ -127,7 +133,7 @@ $(function() {
 		    // ページングの実装(on.clickで作動)
 		$('.bar_tag_yahiro').on('click', function(){
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
-			console.log(pagenationNum); // 確認用
+			console.log('onClick:' + pagenationNum); // 確認用
 			appendHTML(newDataList, pagenationNum);
 		});
 	    		

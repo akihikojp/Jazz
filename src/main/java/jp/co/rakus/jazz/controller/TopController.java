@@ -61,20 +61,12 @@ public class TopController {
 		} else // if(regionId == 0 && prefectureId == 0) { //未選択の場合
 			return null;
 	}
-
 	
-//	/**ページング数をmodelに詰めるメソッド*/
-//	@ResponseBody
-//	@RequestMapping("/paging_number")
-//	public String calculatePagingNumber(List<Bar> barList) {
-//		Integer barNum = barList.size();
-//		List<Integer> pagingNumberList = new ArrayList<>();
-//		Integer numOfPaging = barNum / 10; //パターン1 : 10で割り切sれる数(50)だったら、それ(=5)がページング数になる
-//		if (barNum % 10 != 0) numOfPaging = numOfPaging + 1; //パターン2 : 10で割り切れない数(53)だったら、それ+1(=6)がページング数になる
-//		for(int i = 1; i <= numOfPaging; i++) pagingNumberList.add(i);  //Listにページ番号を格納
-//		
-//		return JSON.encode(pagingNumberList);
-//	}
+	
+	public String pagenationNum(Model model, Integer pagenationNum) {
+		System.out.println("ページ数は" + pagenationNum);
+		return null;
+	}
 
 	
 	/** @return ジャズバー住所リスト(JSON型) */

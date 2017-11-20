@@ -1,6 +1,9 @@
 package jp.co.rakus.jazz.controller;
 
+import lombok.Data;
+
 /** 喫茶店情報のフォーム */
+@Data
 public class BarForm {
 	/** ID */
 	private String id;
@@ -20,77 +23,5 @@ public class BarForm {
 	private String latitude;
 	/** 経度 */
 	private String longitude;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getNameJpa() {
-		return nameJpa;
-	}
-
-	public void setNameJpa(String nameJpa) {
-		this.nameJpa = nameJpa;
-	}
-
-	public String getNameEng() {
-		return nameEng;
-	}
-
-	public void setNameEng(String nameEng) {
-		this.nameEng = nameEng;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getTel() {
-		return tel;
-	}
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	public String getRegionId() {
-		return regionId;
-	}
-
-	public void setRegionId(String regionId) {
-		this.regionId = regionId;
-	}
-
-	public String getPrefectureId() {
-		return prefectureId;
-	}
-
-	public void setPrefectureId(String prefectureId) {
-		this.prefectureId = prefectureId;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
 
 }

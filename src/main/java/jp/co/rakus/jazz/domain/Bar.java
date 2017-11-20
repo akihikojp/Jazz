@@ -1,5 +1,7 @@
 package jp.co.rakus.jazz.domain;
 
+import lombok.Data;
+
 /** create文 */
 //CREATE TABLE `jazz`.`bars` (
 //`id` INT NOT NULL,
@@ -16,6 +18,7 @@ package jp.co.rakus.jazz.domain;
 //UNIQUE INDEX `tel_UNIQUE` (`tel` ASC));
 
 /** 喫茶店情報のドメイン */
+@Data
 public class Bar {
 	/** ID */
 	private Integer id;
@@ -35,61 +38,5 @@ public class Bar {
 	private double latitude;
 	/** 経度 */
 	private double longitude;
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getNameJpa() {
-		return nameJpa;
-	}
-	public void setNameJpa(String nameJpa) {
-		this.nameJpa = nameJpa;
-	}
-	public String getNameEng() {
-		return nameEng;
-	}
-	public void setNameEng(String nameEng) {
-		this.nameEng = nameEng;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public Integer getRegionId() {
-		return regionId;
-	}
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
-	}
-	public Integer getPrefectureId() {
-		return prefectureId;
-	}
-	public void setPrefectureId(Integer prefectureId) {
-		this.prefectureId = prefectureId;
-	}
-	public double getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-	
 
 }

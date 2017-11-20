@@ -10,19 +10,18 @@ $(function() {
 		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
 		if(selectRegionVal == 0 && selectPrefectureVal == 0){// 両方のタグが未選択だった場合の処理
 			alert('地域か都道府県は必ず選択してください!');
-		}
-		
+		}		
 		$.ajax({
 		url :  hostUrl + '/find_bar?regionId=' + selectRegionVal + '&prefectureId=' + selectPrefectureVal,
 		// regionIdとprefectureIdの2つの値が渡される.
 		dataType : 'json',
 		type : 'GET'
-	})
+		})
+	
 	.then(function(searchItems){
-		calculatePageNum(searchItems);
+		calculatePageNum(searchItems); //パージ数を検索するメソッド
 		
 		dataList = searchItems;
-		console.log('データ数は' + dataList.length);
 		
 		
 		
@@ -46,34 +45,13 @@ $(function() {
         	$.each(pagenationArray, function(i, page){
         		pageNum = i + 1; //配列は0からページは1から
         		$('.bar_tag_yahiro').append(	'<a>' + pageNum + '</a>');
+        		
         	});
         	   	
-        	
         	console.log('serchItemsの数は'+ searchItems.length);
         	console.log('pagenationArrayの数は'+ pagenationArray.length);
 	        	
 	        }
-        
-////////////////////////////////////////////////したけすーーーーーーーーーーーーーーーーーー
-	    function appendHTML(dataList, pagenationNum){
-	        var html =  "";
-	        $("#data-list").empty();
-	    		$.each(dataList[pagenationNum], function(i, data){
-	            html += '<tr>';
-	                html += '<td>'+(i+1)+'</td>';
-	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
-	                html += data.nameJpa;
-	                html += '</a></td>';
-	                html += '<td>'+data.distance+'km</td>';
-	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
-	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
-	            html += '</tr>';
-	        }); //eachのendPoint
-	    		
-	    		   $("#data-list").append(html);
-	    		   html = "";
-	    };
-///////////////////////////////////////////////うえけすーーーーーーーーーーーーーー
         
     // データが揃った段階でソートを開始
     $.when(
@@ -125,7 +103,7 @@ $(function() {
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-		    // ページングの実装(on.clickで作動)
+		    // ページングの実装(onClickで作動)
 		$('.bar_tag_yahiro').on('click', function(){
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
 			console.log('onClick:' + pagenationNum); // 確認用
@@ -133,7 +111,7 @@ $(function() {
 		});
 	    		
 		
-//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 	    /**
 		 * 2点間の緯度経度から距離を取得 測地線航海算法を使用して距離を算出する。
 		 * 

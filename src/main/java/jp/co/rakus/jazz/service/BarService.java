@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.repository.BarRepository;
 
-@Transactional
 @Service
+@Transactional
 public class BarService {
 
 	@Autowired
