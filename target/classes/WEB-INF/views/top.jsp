@@ -77,27 +77,28 @@ body {
 					<tbody id="data-list" align="center"></tbody>
 				</table>
 				
-				<nav aria-label="Page navigation">
-					  <ul class="pagination jazz_bar_pagination">
+				<div id="yahiro_pagination_id" align ="center">
+				<!--  <nav aria-label="Page navigation">  -->
+				
+					 <!--  <ul class="pagination jazz_bar_pagination">
 					    		<li>
 						      <a href="#" aria-label="Previous">
 						        <span aria-hidden="true">&laquo;</span>
 						      </a>
 						    </li>
 						    
-						    <!-- この処理js側でやろう -->
- 		<!-- 				     <c:forEach begin="1" items="${pagingNumberList}" varStatus="status">
+						    この処理js側でやるか
+ 						     <c:forEach begin="1" items="${pagingNumberList}" varStatus="status">
 							　<li class="bar_tag_yahiro"><a><c:out value="${status.index}"/></a></li>
-							</c:forEach>  -->
+							</c:forEach> 
 							
- 					   	  	  <li class="bar_tag_yahiro"><a>1</a></li>
- 					   	   	  <li class="bar_tag_yahiro"><a>2</a></li>
- 					   	      <li class="bar_tag_yahiro"><a>3</a></li>
+							<li class="bar_tag_yahiro"><a>1</a></li>
+									
+						 <li class="bar_tag_yahiro"><a>1</a></li>
+ 					   	  	  <li class="bar_tag_yahiro"><a>2</a></li>
+ 					   	  	  <li class="bar_tag_yahiro"><a>3</a></li>
+ 					   	  	  <li class="bar_tag_yahiro"><a>4</a></li>
  					   	      
-<!--  						<li class="bar_tag_yahiro"><a>2</a></li>
-						    <li class="bar_tag_yahiro"><a>3</a></li>
-						    <li class="bar_tag_yahiro"><a>4</a></li>
-						    <li class="bar_tag_yahiro"><a>5</a></li>  -->
 						    
 						    <li>
 						      <a href="#" aria-label="Next">
@@ -105,7 +106,9 @@ body {
 						      </a>
 					    		</li>
 					  </ul>
-				</nav>
+				</nav>  -->
+			</div>
+
 
 
 				<br>

@@ -6,6 +6,8 @@ $(function() {
     var newDataList = []; // ページング用の配列
 
 	$("#findBar").on('click', function(){
+		//何度もクリックした時にページ数が加算されてしまうので、ここで初期化
+		var dataList = [],  pagenationNum = 0, newDataList = []; 
 		var selectRegionVal = $("#select_region").val();  // 地域ID
 		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
 		if(selectRegionVal == 0 && selectPrefectureVal == 0){// 両方のタグが未選択だった場合の処理
@@ -41,15 +43,14 @@ $(function() {
         		pagenationArray.push(i);
         	}
         	
-        	$('.bar_tag_yahiro').empty();
-        	$.each(pagenationArray, function(i, page){
-        		pageNum = i + 1; //配列は0からページは1から
-        		$('.bar_tag_yahiro').append(	'<a>' + pageNum + '</a>');
-        		
-        	});
-        	   	
-        	console.log('serchItemsの数は'+ searchItems.length);
-        	console.log('pagenationArrayの数は'+ pagenationArray.length);
+//        	$('.bar_tag_yahiro').empty();
+//        	$.each(pagenationArray, function(i, page){
+//        		pageNum = i + 1; //配列は0から。ページは1から。
+//        		$('.bar_tag_yahiro').append(	'<a>' + pageNum + '</a>');
+//        	});
+//        	   	
+//        	console.log('serchItemsの数は'+ searchItems.length);
+//        	console.log('pagenationArrayの数は'+ pagenationArray.length);
 	        	
 	        }
         
@@ -58,7 +59,9 @@ $(function() {
         dfdCurrentPosition(),
        // dfdGeocode(),
         dfdDocumentReady(),
-        $("#data-list").empty() // 検索条件を変える毎にテーブル更新される
+        calculatePageNum(searchItems),
+        $("#data-list").empty(), // 検索条件を変える毎にテーブル更新される
+        $('#yahiro-pagination-id').empty()
     )
     .done(function(position){
 
@@ -85,28 +88,49 @@ $(function() {
 	        	  newDataList.push(p);                   // i*cnt 番目から取得したものをnewDataList に追加
 	        }
 	        
-	     //初回に表示するページは配列【0】、初期値はグローバル変数で宣言してる。
+	    console.log('ソートした後の配列数:' + newDataList.length);
 	    appendHTML(newDataList, pagenationNum);
-	    
+	    appendPagenation(newDataList);
+    		
     })
+    
     // 失敗
     .fail(function(){
         alert("お使いの端末の位置情報サービスが無効になっているか対応していないため、エラーが発生しました");
         console.log("error", arguments);
     });
     
-	},function(){});
-///////////////////////////////////////////////////
+	},function(){});	
+			
+///////////////////////////////////////////////////////////////////////////////////////
 	
 		
-	// 以下、メソッド外部化!
+	// 以下、外部化メソッド
 
+		
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	    //ページング表示
+	    function appendPagenation(newDataList){
+	    	var pageHTML = "";
+	    	$('#yahiro-pagination-id').empty();
+	    	for(var i = 1; i <= newDataList.length; i++){
+	    		pageHTML += '<a class="bar_tag_yahiro">' + i + '</a>'; 
+	    	}
+	    	$('#yahiro-pagination-id').html(pageHTML);
+	    	
+	    };
+		
 ////////////////////////////////////////////////////////////////////////////////////////
 
-		    // ページングの実装(onClickで作動)
-		$('.bar_tag_yahiro').on('click', function(){
+		//ページングの実装
+	    /**DANGER!!:jQueryで動的にDOMを生成すると、その要素に対してイベントを生成するには通常の方法ではイベントが効かなくなる*/
+	    //第一引数:イベント名
+	    //第二引数:セレクタ
+	    //第三引数:関数イベントfunction()
+		$(document).on('click', '.bar_tag_yahiro', function(){
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
-			console.log('onClick:' + pagenationNum); // 確認用
+//			console.log('クリックしたページのは配列は' + pagenationNum); // 確認用
 			appendHTML(newDataList, pagenationNum);
 		});
 	    		
@@ -152,14 +176,17 @@ $(function() {
 	      }
 	      return distance;
 	    }
-///////////////////////////////////////////////////////////////////////////////////////////////////
+	    
+	    
+	    ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		//HTMLにappendするメソッド。ページング実装で必要になったので外部化
-	    function appendHTML(dataList, pagenationNum){
+		//HTMLにappendするメソッド. ページング実装で必要になったので外部化。
+	    function appendHTML(dataList, pagenationNum/**onClickしたページ数*/){
 	        var html =  "";
+
 	        $("#data-list").empty();
 	    		$.each(dataList[pagenationNum], function(i, data){
-	            html += '<tr>';
+	    			html += '<tr>';
 	                html += '<td>'+(i+1)+'</td>';
 	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
 	                html += data.nameJpa;
@@ -168,9 +195,8 @@ $(function() {
 	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
 	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
 	            html += '</tr>';
-	        }); //eachのendPoint
-	    		
-	    		   $("#data-list").append(html);
+	        });
+	    		  $("#data-list").append(html);
 	    		   html = "";
 	    };
 	    

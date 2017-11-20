@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -50,23 +51,16 @@ public class TopController {
 	@ResponseBody
 	@RequestMapping("/find_bar")                                         
 	public String findBarBySomeId(Integer regionId, Integer prefectureId) {
-		List<Bar> barList = new ArrayList<>();
-		if (regionId != 0 && prefectureId == 0) { // 地域IDのみ選択し、都道府県は全選択にした場合
-			barList = barService.findByRegionId(regionId);
-			return JSON.encode(barList);
-			
-		} else if (prefectureId != 0) { // 都道府県IDを選択した場合(地域IDも自動的に入る)
-			barList = barService.findByPrefectureId(prefectureId);
-			return JSON.encode(barList);
-		} else // if(regionId == 0 && prefectureId == 0) { //未選択の場合
-			return null;
+		return JSON.encode(barService.findBarBySomeId(regionId, prefectureId));
 	}
 	
-	
-	public String pagenationNum(Model model, Integer pagenationNum) {
-		System.out.println("ページ数は" + pagenationNum);
-		return null;
-	}
+//	@RequestMapping("/pagenationNum")
+//	public String pagenationNum(Model model, Integer regionId, Integer prefectureId) {
+//		Integer pagenationNum = barService.findBarBySomeId(regionId, prefectureId).size();
+//		model.addAttribute("pagenationNum", pagenationNum);
+//		System.out.println("数はーーーーーーーーーーーーー" + pagenationNum);
+//		return null;
+//	}
 
 	
 	/** @return ジャズバー住所リスト(JSON型) */
