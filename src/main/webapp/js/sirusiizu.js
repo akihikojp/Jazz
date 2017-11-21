@@ -1,5 +1,5 @@
 /*******************************************************************************
-名前：しるしーず
+名前：しるしーず(ライブラリ)
 説明：googleマップで複数住所を一括表示するライブラリ
 　　　windowオブジェクトのプロパティにsirusiizuオブジェクトが追加される。
 版　：1.01
@@ -57,7 +57,7 @@ var sirusiizu = function () {
 	this.callback = {};
 	this.address = [];
 }
-//プロトタイプ：オブジェクトみたいなもの。汎用的な関数をprototypeに定義している。
+//プロトタイプとは？：オブジェクトみたいなもの。汎用的な関数をprototypeに定義する
 sirusiizu.prototype = {
 clear: function () {
 	for (var i = 0; i < this.address.length; i++) {
@@ -103,7 +103,8 @@ marking: function (addressList, cb/**コールバック*/) {
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: null,  //ピンとかの体裁
+				iconURL: "img/jazz_icon.png", //ピンとかの体裁
+				
 				infoHTML: null, //ウィンドウやポップの内容
 				title: null     //ポップのタイトル
 			});
@@ -159,7 +160,6 @@ marking: function (addressList, cb/**コールバック*/) {
 					/**緯度・経度格納リスト*/
 					ajaxObjList.push({
 						address   : address[index].address,
-//いらんかも→	      		address : results[0],
 						latitude     : address[index].location.lat(),
 						longitude     : address[index].location.lng() 
 					});
@@ -170,11 +170,11 @@ marking: function (addressList, cb/**コールバック*/) {
 					}
 	
 					//アイコンを変えたいときに使用する
-	//				if (address[index].iconURL) {
-	//					address[index].icon = new google.maps.MarkerImage(address[index].iconURL);
-	//				} else {
-	//					address[index].icon = null;
-	//				}
+					if (address[index].iconURL) {
+						address[index].icon = new google.maps.MarkerImage(address[index].iconURL);
+					} else {
+						address[index].icon = null;
+					}
 					
 					//ピンたてメソッド
 					putMarker(map, address[index]);
@@ -213,7 +213,7 @@ marking: function (addressList, cb/**コールバック*/) {
 				}
 			});
 		}
-	}//codeAddressメソッド
+	}//codeAddress終
 
 					//境界を合わせる処理
 					function fitBounds(map, address) {
@@ -232,9 +232,10 @@ marking: function (addressList, cb/**コールバック*/) {
 						var northeast = new google.maps.LatLng(north, east);
 						var southwest = new google.maps.LatLng(south, west);
 						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
-					} //end:fitBoundsメソッド		
-		} //end:marking : function
-} //end:sirusiizu.prototype	
+					} //fitBounds終
+					
+		} //marking:function終
+} //sirusiizu.prototype終
 
-window.sirusiizu = new sirusiizu();  //ここでnewしてる
+window.sirusiizu = new sirusiizu();  //ここでnew
 })();

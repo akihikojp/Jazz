@@ -1,16 +1,17 @@
 $(function() {
+	sirusiizu.initialize("mapCanvas"); //top.jsp:GoogleMapのタグid
+	
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
 	var dataList = []; // 緯度・経度設定済み
-	var pagenationNum = 0; // ページング用の宣言
-    var newDataList = []; // ページング用の配列
+	var pagenationNum = 0; // ページング番号
+    var newDataList = []; // ページング用配列
 
 	$("#findBar").on('click', function(){
-		//何度もクリックした時にページ数が加算されてしまうので、ここで初期化
-		var dataList = [],  pagenationNum = 0, newDataList = []; 
-		var selectRegionVal = $("#select_region").val();  // 地域ID
+		var dataList = [],  pagenationNum = 0, newDataList = [];  //検索ボタンクリック毎に初期化
+		var selectRegionVal = $("#select_region").val();          // 地域ID
 		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
-		if(selectRegionVal == 0 && selectPrefectureVal == 0){// 両方のタグが未選択だった場合の処理
+		if(selectRegionVal == 0 && selectPrefectureVal == 0){     // 両方のタグが未選択だった場合の処理
 			alert('地域か都道府県は必ず選択してください!');
 		}		
 		$.ajax({
@@ -22,7 +23,6 @@ $(function() {
 	
 	.then(function(searchItems){
 		calculatePageNum(searchItems); //パージ数を検索するメソッド
-		
 		dataList = searchItems;
 		
 		
@@ -42,17 +42,8 @@ $(function() {
         	for(var i = 1; i <= numOfPage; i++){
         		pagenationArray.push(i);
         	}
-        	
-//        	$('.bar_tag_yahiro').empty();
-//        	$.each(pagenationArray, function(i, page){
-//        		pageNum = i + 1; //配列は0から。ページは1から。
-//        		$('.bar_tag_yahiro').append(	'<a>' + pageNum + '</a>');
-//        	});
-//        	   	
-//        	console.log('serchItemsの数は'+ searchItems.length);
-//        	console.log('pagenationArrayの数は'+ pagenationArray.length);
-	        	
-	        }
+       	
+	}
         
     // データが揃った段階でソートを開始
     $.when(
@@ -102,6 +93,10 @@ $(function() {
     
 	},function(){});	
 			
+		
+		
+		
+		
 ///////////////////////////////////////////////////////////////////////////////////////
 	
 		
@@ -110,7 +105,7 @@ $(function() {
 		
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	    //ページング表示
+	    //ページ数を動的にするメソッド
 	    function appendPagenation(newDataList){
 	    	var pageHTML = "";
 	    	$('#yahiro-pagination-id').empty();
@@ -126,28 +121,23 @@ $(function() {
 		//ページングの実装
 	    /**DANGER!!:jQueryで動的にDOMを生成すると、その要素に対してイベントを生成するには通常の方法ではイベントが効かなくなる*/
 	    //第一引数:イベント名
-	    //第二引数:セレクタ
+	    //第二引数:セレクタ(ここでは、上で作ったやつ)
 	    //第三引数:関数イベントfunction()
 		$(document).on('click', '.bar_tag_yahiro', function(){
+			var pageHTML = "";
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
-//			console.log('クリックしたページのは配列は' + pagenationNum); // 確認用
 			appendHTML(newDataList, pagenationNum);
 		});
 	    		
 		
 /////////////////////////////////////////////////////////////////////////////////////////
 	    /**
-		 * 2点間の緯度経度から距離を取得 測地線航海算法を使用して距離を算出する。
-		 * 
+		 * 2点間の緯度経度から距離を取得 測地線航海算法を使用して距離を算出する.
 		 * @see http://hamasyou.com/blog/2010/09/07/post-2/
-		 * @param float
-		 *            緯度1
-		 * @param float
-		 *            経度2
-		 * @param float
-		 *            緯度2
-		 * @param float
-		 *            経度2
+		 * @param float 緯度1
+		 * @param float 経度2
+		 * @param float 緯度2
+		 * @param float 経度2
 		 * @param 小数点以下の桁数(べき乗で算出精度を指定)
 		 */
 	    function getDistance(lat1, lng1, lat2, lng2, precision){
@@ -180,11 +170,24 @@ $(function() {
 	    
 	    ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		//HTMLにappendするメソッド. ページング実装で必要になったので外部化。
+		//HTMLにappendするメソッド. ページング実装で必要になったので外部化.
 	    function appendHTML(dataList, pagenationNum/**onClickしたページ数*/){
 	        var html =  "";
 
 	        $("#data-list").empty();
+	        
+	        html += '<table border="1">';
+	        html += '<thead>';
+	        html += '<tr>';
+	        html += '<td width="150" align="center">距離が近い順</td>';
+	        html += '<td width="300" align="center">店名</td>';
+	        html += '<td width="200" align="center">ここからの距離</td>';
+	        html += '</tr>';
+	        html += '</thead>';
+	        
+	        
+	        
+	        
 	    		$.each(dataList[pagenationNum], function(i, data){
 	    			html += '<tr>';
 	                html += '<td>'+(i+1)+'</td>';
@@ -192,10 +195,11 @@ $(function() {
 	                html += data.nameJpa;
 	                html += '</a></td>';
 	                html += '<td>'+data.distance+'km</td>';
-	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
-	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
+//	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
+//	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
 	            html += '</tr>';
 	        });
+	    		   html += '</table>';
 	    		  $("#data-list").append(html);
 	    		   html = "";
 	    };
@@ -270,11 +274,7 @@ $(function() {
 	            return dfd.promise();
 	        }
 		
-////////////////////////////////////////////////////////////////////
-	        
-	        
-//////////////////////////////////////////////////////////////////////
-	        
-	        
+///////////////////////////////////////////////////////////////////
+	             
 	});
 });

@@ -21,7 +21,6 @@ body {
 						<i>JAZZ喫茶を検索する </i>
 					</legend>
 
-					<label for="distance">【どこのjazz喫茶に行きますか?】</label> <br>
 					<!--   		距離:<select id="distance" name="distance">
 							<option value="1">1km以内</option>
 							<option value="5">5km以内</option>
@@ -39,89 +38,61 @@ body {
 							<br>
 						-->
 					<div>
-					<select name="regionId" id="select_region" class="region_class">
-						<option value="0">地域</option>
-						<c:forEach var="region" items="${regionList}" varStatus="status">
-							<option value="${status.count}"><c:out value="${region.name}"/></option>
-						</c:forEach>
-					</select>
-					
-						<select name="prefectureId" id="select_prefecture"
-							class="prefecture_class">
+					・地域で選択：
+						<select name="regionId" id="select_region" class="region_class">
+							<option value="0">地域</option>
+							<c:forEach var="region" items="${regionList}" varStatus="status">
+								<option value="${status.count}"><c:out value="${region.name}"/></option>
+							</c:forEach>
+						</select> 
+						
+						<select name="prefectureId" id="select_prefecture" class="prefecture_class">
 							<option value="0">都道府県</option>
-							<c:forEach var="prefecture" items="${prefectureList}"
-								varStatus="status">
+							<c:forEach var="prefecture" items="${prefectureList}" varStatus="status">
 								<option value="${status.count}"><c:out value="${prefecture.name}"/></option>
 							</c:forEach>
 						</select> 
-					<br> 
-					
-						<input type="button" value="検索" id="findBar">
-						<input type="button" onclick="location.href='${pageContext.request.contextPath}/top'" value="リセット">
+						 
+						 <br> 
+						 <input type="button" value="検索" id="findBar"> 
+						 <input type="button" onclick="location.href='${pageContext.request.contextPath}/top'" value="リセット">
 					</div>
 				</fieldset>
 
 				<br>
+								
+				<!--　喫茶店情報の処理 -->
+				<div id="data-list" align="center"></div>
 
 
-				<table border="1">
-					<thead>
-						<tr>
-							<td width="150" align="center">距離の近い順</td>
-							<td width="300" align="center">店名</td>
-							<td width="200" align="center">現在地からの距離</td>
-							<td width="130" align="center">緯度</td>
-							<td width="130" align="center">経度</td>		
-						</tr>
-					</thead>
-					<tbody id="data-list" align="center"></tbody>
-				</table>
+				<!-- ページングの処理 -->
+				<nav aria-label="Page navigation">
+					<ul class="pagination jazz_bar_pagination">
+<!-- 						<li>
+							<a href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							</a> 
+						</li> -->				
+						<li id="yahiro-pagination-id"><a>ページ数</a></li>	
+	<!-- 					<li>
+							<a href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li> -->
+					</ul>
+				</nav>
 				
-				<div id="yahiro_pagination_id" align ="center">
-				<!--  <nav aria-label="Page navigation">  -->
-				
-					 <!--  <ul class="pagination jazz_bar_pagination">
-					    		<li>
-						      <a href="#" aria-label="Previous">
-						        <span aria-hidden="true">&laquo;</span>
-						      </a>
-						    </li>
-						    
-						    この処理js側でやるか
- 						     <c:forEach begin="1" items="${pagingNumberList}" varStatus="status">
-							　<li class="bar_tag_yahiro"><a><c:out value="${status.index}"/></a></li>
-							</c:forEach> 
-							
-							<li class="bar_tag_yahiro"><a>1</a></li>
-									
-						 <li class="bar_tag_yahiro"><a>1</a></li>
- 					   	  	  <li class="bar_tag_yahiro"><a>2</a></li>
- 					   	  	  <li class="bar_tag_yahiro"><a>3</a></li>
- 					   	  	  <li class="bar_tag_yahiro"><a>4</a></li>
- 					   	      
-						    
-						    <li>
-						      <a href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
-					    		</li>
-					  </ul>
-				</nav>  -->
-			</div>
-
-
-
 				<br>
-
+				
 			</div>
 		</div>
 	</div>
 </div>
-				
+
 				<!-- GoogleMapの表示 -->
-				<div id="mapCanvas" style="position: static"></div>
-				
-				
+				<div id="mapCanvas" style="position:static"></div>
+
+
 <!--  検索結果 -->
 <div class="container">
 	<div class="row browser_box">
@@ -177,22 +148,22 @@ body {
 
 
 
-				<div class="container">
-					<div class="row browser_box">
-						<div class="col-xs-12">
-							<div class="well">
-								<!--選択した地域の住所情報から経度・緯度を抽出し、DBに格納 -->
-								<select name="regionId" id="update_region" class="region_class">
-									<c:forEach var="region" items="${regionList}" varStatus="status">
-										<option value="${status.count}"><c:out value="${region.name}"/></option>
-									</c:forEach>
-								</select> <input type=submit value="緯度経度取得ボタン(管理者用)" id="findLatAndLng">
-							</div>
-						</div>
-					</div>
-				</div>
+<div class="container">
+	<div class="row browser_box">
+		<div class="col-xs-12">
+			<div class="well">
+				<!--選択した地域の住所情報から経度・緯度を抽出し、DBに格納 -->
+				<select name="regionId" id="update_region" class="region_class">
+					<c:forEach var="region" items="${regionList}" varStatus="status">
+						<option value="${status.count}"><c:out value="${region.name}"/></option>
+					</c:forEach>
+				</select> <input type=submit value="緯度経度取得ボタン(管理者用)" id="findLatAndLng">
+			</div>
+		</div>
+	</div>
+</div>
 
-				
+
 
 
 <br>

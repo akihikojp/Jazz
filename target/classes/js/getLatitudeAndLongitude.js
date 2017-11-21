@@ -1,5 +1,5 @@
 /**
- * 緯度と経度を取得するjsを作成. geocodeAPIとsirusiizuライブラリを使う.
+ * 緯度と経度を取得するjs. geocodeAPIとsirusiizuライブラリを使う.
  */
 
 	var pathName = location.pathname.split('/')[1];
@@ -22,11 +22,6 @@ $(function() {
 			console.log('★sirusiizu.marking:処理後');
 			console.log('★ajaxProcess:作動中');
 			
-			////////////////////////////////
-//			console.log('★ajaxProcess:処理前');
-//			ajaxProcess(ajaxObj) //メソッドの切出し
-//			console.log('★ajaxProcess:処理後');
-			
 		}, function() {
 			reject("Mapにピンを立てています。サーバとの接続状態が不安定です");
 		});
@@ -35,7 +30,7 @@ $(function() {
 }); //$(function)のend tag
 
 
-//外部化
+//以下、外部化
 
 	// 緯度・経度情報が格納されたajaxObjをController側に渡して、DBに格納する為のメソッド.
 	function ajaxProcess(ajaxObj) {

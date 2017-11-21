@@ -1,5 +1,5 @@
 /*******************************************************************************
-名前：しるしーず
+名前：しるしーず(ライブラリ)
 説明：googleマップで複数住所を一括表示するライブラリ
 　　　windowオブジェクトのプロパティにsirusiizuオブジェクトが追加される。
 版　：1.01
@@ -103,7 +103,7 @@ marking: function (addressList, cb/**コールバック*/) {
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: null,  //ピンとかの体裁
+				iconURL: null, //ピンとかの体裁
 				infoHTML: null, //ウィンドウやポップの内容
 				title: null     //ポップのタイトル
 			});
@@ -159,7 +159,6 @@ marking: function (addressList, cb/**コールバック*/) {
 					/**緯度・経度格納リスト*/
 					ajaxObjList.push({
 						address   : address[index].address,
-//いらんかも→	      		address : results[0],
 						latitude     : address[index].location.lat(),
 						longitude     : address[index].location.lng() 
 					});
