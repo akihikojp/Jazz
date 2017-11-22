@@ -54,15 +54,6 @@ public class TopController {
 		return JSON.encode(barService.findBarBySomeId(regionId, prefectureId));
 	}
 	
-//	@RequestMapping("/pagenationNum")
-//	public String pagenationNum(Model model, Integer regionId, Integer prefectureId) {
-//		Integer pagenationNum = barService.findBarBySomeId(regionId, prefectureId).size();
-//		model.addAttribute("pagenationNum", pagenationNum);
-//		System.out.println("数はーーーーーーーーーーーーー" + pagenationNum);
-//		return null;
-//	}
-
-	
 	/** @return ジャズバー住所リスト(JSON型) */
 	@ResponseBody
 	@RequestMapping("/lat_lng")

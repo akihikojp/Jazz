@@ -103,10 +103,14 @@ marking: function (addressList, cb/**コールバック*/) {
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: "img/jazz_icon.png", //ピンとかの体裁
-				
-				infoHTML: null, //ウィンドウやポップの内容
-				title: null     //ポップのタイトル
+				iconURL: "img/jazz_icon.png",
+				title: "クリックすると詳細情報が閲覧できます。",
+				infoHTML: "リンククリックで詳細情報が閲覧できます<br>"
+				+ '<a href="https://maps.google.co.jp/maps?q=' + addressList[i] + '&z=17&iwloc=A" target="_blank">'
+				+ addressList[i]
+				+ '</a>'
+//			    + "<br /><br />緯度：" + address.location.lat().toFixed(7) 
+//							  + "　経度：" + address.location.lng().toFixed(7) + "<br /><br />"
 			});
 		}
 	}
@@ -133,7 +137,7 @@ marking: function (addressList, cb/**コールバック*/) {
 			position: addressList.location
 		});
 		addressList.marker = marker;
-		if (addressList.infoHTML) {
+		if (addressList.infoHTML /**上で定義*/ ) {
 			var infowindow = new google.maps.InfoWindow({
 				content: addressList.infoHTML
 			});
@@ -190,7 +194,8 @@ marking: function (addressList, cb/**コールバック*/) {
 						
 						fitBounds(map, address);
 						
-						//ajaxProcessを呼出し
+						//ajaxProcess呼出し.
+						//ここでDBに格納する処理を行なっている.
 						ajaxProcess(ajaxObjList)
 						.then(function(message) {
 							alert(message);

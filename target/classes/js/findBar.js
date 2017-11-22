@@ -1,5 +1,7 @@
 $(function() {
-	sirusiizu.initialize("mapCanvas"); //top.jsp:GoogleMapのタグid
+	//top.jsp:GoogleMapタグid
+	sirusiizu.initialize("mapCanvas");
+	
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
 	var dataList = []; // 緯度・経度設定済み
@@ -8,26 +10,23 @@ $(function() {
 
 	$("#findBar").on('click', function(){
 		var dataList = [],  pagenationNum = 0, newDataList = [];  //検索ボタンクリック毎に初期化
-		var selectRegionVal = $("#select_region").val();          // 地域ID
-		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
-		if(selectRegionVal == 0 && selectPrefectureVal == 0){     // 両方のタグが未選択だった場合の処理
+		var selectRegionVal = $("#select_region").val();          //地域ID
+		var selectPrefectureVal = $("#select_prefecture").val();  //都道府県ID(地域IDのみ選択した場合は、'0')
+		if(selectRegionVal == 0 && selectPrefectureVal == 0){     //両方のタグが未選択だった場合の処理
 			alert('地域か都道府県は必ず選択してください!');
-		}		
+		}
 		$.ajax({
-		url :  hostUrl + '/find_bar?regionId=' + selectRegionVal + '&prefectureId=' + selectPrefectureVal,
-		// regionIdとprefectureIdの2つの値が渡される.
+		url :  hostUrl + '/find_bar?regionId=' + selectRegionVal 
+		               + '&prefectureId=' + selectPrefectureVal,
 		dataType : 'json',
 		type : 'GET'
 		})
-	
-	.then(function(searchItems){
-		calculatePageNum(searchItems); //パージ数を検索するメソッド
-		dataList = searchItems;
-		
-		
-		
-/////////////////////////////////////
-		
+		.then(function(searchItems){ //←BarListのJSON形式
+			calculatePageNum(searchItems); //ページ数を検索するメソッド
+			serachItems.address[i];
+			dataList = searchItems;
+			
+
 		//取得してきたアイテム数を引数としたページ数の計算メソッド
         function calculatePageNum(searchItems){
         	var barNum = searchItems.length; //検索してきた喫茶店の数
@@ -81,17 +80,21 @@ $(function() {
 	    console.log('ソートした後の配列数:' + newDataList.length);
 	    appendHTML(newDataList, pagenationNum);
 	    appendPagenation(newDataList);
-    		
-    })
+	    
+    }) //done終
     
     // 失敗
     .fail(function(){
-        alert("お使いの端末の位置情報サービスが無効になっているか対応していないため、エラーが発生しました");
+        alert("お使いの端末の位置情報サービスが無効になっているか対応していないため、エラーが発生しました。rakusinternalに接続されているかどうか確認してください。");
         console.log("error", arguments);
     });
     
 	},function(){});	
 			
+		
+		
+		
+		
 ///////////////////////////////////////////////////////////////////////////////////////
 	
 		
@@ -116,19 +119,18 @@ $(function() {
 		//ページングの実装
 	    /**DANGER!!:jQueryで動的にDOMを生成すると、その要素に対してイベントを生成するには通常の方法ではイベントが効かなくなる*/
 	    //第一引数:イベント名
-	    //第二引数:セレクタ(ここでは、上で作ったやつ)
+	    //第二引数:セレクタ（上のメソッドで作ったclass名)
 	    //第三引数:関数イベントfunction()
 		$(document).on('click', '.bar_tag_yahiro', function(){
 			var pageHTML = "";
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
 			appendHTML(newDataList, pagenationNum);
-			sirusiizu.marking(newDataList); // sirusiizu.js呼出し
 		});
 	    		
 		
 /////////////////////////////////////////////////////////////////////////////////////////
 	    /**
-		 * 2点間の緯度経度から距離を取得 測地線航海算法を使用して距離を算出する.
+		 * 2点間の緯度経度から距離を取得. 測地線航海算法を使用して距離を算出する.
 		 * @see http://hamasyou.com/blog/2010/09/07/post-2/
 		 * @param float 緯度1
 		 * @param float 経度2
@@ -177,12 +179,9 @@ $(function() {
 	        html += '<tr>';
 	        html += '<td width="150" align="center">距離が近い順</td>';
 	        html += '<td width="300" align="center">店名</td>';
-	        html += '<td width="200" align="center">ここからの距離</td>';
+	        html += '<td width="200" align="center">現在地から距離</td>';
 	        html += '</tr>';
 	        html += '</thead>';
-	        
-	        
-	        
 	        
 	    		$.each(dataList[pagenationNum], function(i, data){
 	    			html += '<tr>';
@@ -191,8 +190,6 @@ $(function() {
 	                html += data.nameJpa;
 	                html += '</a></td>';
 	                html += '<td>'+data.distance+'km</td>';
-//	                html += '<td>' + data.latitude.toFixed(3);+ '</td>';
-//	                html += '<td>' + data.longitude.toFixed(3); + '</td>';
 	            html += '</tr>';
 	        });
 	    		   html += '</table>';
@@ -271,6 +268,12 @@ $(function() {
 	        }
 		
 ///////////////////////////////////////////////////////////////////
+	        
+
+	        
+	        
+	        
+////////////////////////////////////////////
 	             
 	});
 });

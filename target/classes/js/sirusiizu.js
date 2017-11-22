@@ -57,7 +57,7 @@ var sirusiizu = function () {
 	this.callback = {};
 	this.address = [];
 }
-//プロトタイプ：オブジェクトみたいなもの。汎用的な関数をprototypeに定義している。
+//プロトタイプとは？：オブジェクトみたいなもの。汎用的な関数をprototypeに定義する
 sirusiizu.prototype = {
 clear: function () {
 	for (var i = 0; i < this.address.length; i++) {
@@ -103,9 +103,14 @@ marking: function (addressList, cb/**コールバック*/) {
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: null, //ピンとかの体裁
-				infoHTML: null, //ウィンドウやポップの内容
-				title: null     //ポップのタイトル
+				iconURL: "img/jazz_icon.png",
+				title: "クリックすると詳細情報が閲覧できます。",
+				infoHTML: "リンククリックで詳細情報が閲覧できます<br>"
+				+ '<a href="https://maps.google.co.jp/maps?q=' + addressList[i] + '&z=17&iwloc=A" target="_blank">'
+				+ addressList[i]
+				+ '</a>'
+//			    + "<br /><br />緯度：" + address.location.lat().toFixed(7) 
+//							  + "　経度：" + address.location.lng().toFixed(7) + "<br /><br />"
 			});
 		}
 	}
@@ -132,7 +137,7 @@ marking: function (addressList, cb/**コールバック*/) {
 			position: addressList.location
 		});
 		addressList.marker = marker;
-		if (addressList.infoHTML) {
+		if (addressList.infoHTML /**上で定義*/ ) {
 			var infowindow = new google.maps.InfoWindow({
 				content: addressList.infoHTML
 			});
@@ -169,11 +174,11 @@ marking: function (addressList, cb/**コールバック*/) {
 					}
 	
 					//アイコンを変えたいときに使用する
-	//				if (address[index].iconURL) {
-	//					address[index].icon = new google.maps.MarkerImage(address[index].iconURL);
-	//				} else {
-	//					address[index].icon = null;
-	//				}
+					if (address[index].iconURL) {
+						address[index].icon = new google.maps.MarkerImage(address[index].iconURL);
+					} else {
+						address[index].icon = null;
+					}
 					
 					//ピンたてメソッド
 					putMarker(map, address[index]);
@@ -189,7 +194,8 @@ marking: function (addressList, cb/**コールバック*/) {
 						
 						fitBounds(map, address);
 						
-						//ajaxProcessを呼出し
+						//ajaxProcess呼出し.
+						ここでDBに格納する処理を行なっている.
 						ajaxProcess(ajaxObjList)
 						.then(function(message) {
 							alert(message);
@@ -212,7 +218,7 @@ marking: function (addressList, cb/**コールバック*/) {
 				}
 			});
 		}
-	}//codeAddressメソッド
+	}//codeAddress終
 
 					//境界を合わせる処理
 					function fitBounds(map, address) {
@@ -231,9 +237,10 @@ marking: function (addressList, cb/**コールバック*/) {
 						var northeast = new google.maps.LatLng(north, east);
 						var southwest = new google.maps.LatLng(south, west);
 						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
-					} //end:fitBoundsメソッド		
-		} //end:marking : function
-} //end:sirusiizu.prototype	
+					} //fitBounds終
+					
+		} //marking:function終
+} //sirusiizu.prototype終
 
-window.sirusiizu = new sirusiizu();  //ここでnewしてる
+window.sirusiizu = new sirusiizu();  //ここでnew
 })();

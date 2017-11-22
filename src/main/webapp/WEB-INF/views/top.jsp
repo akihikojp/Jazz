@@ -37,15 +37,17 @@ body {
 							<input type="submit" value="検索">
 							<br>
 						-->
+						
 					<div>
-					・地域で選択：
+					★地域で選択:
 						<select name="regionId" id="select_region" class="region_class">
 							<option value="0">地域</option>
 							<c:forEach var="region" items="${regionList}" varStatus="status">
 								<option value="${status.count}"><c:out value="${region.name}"/></option>
 							</c:forEach>
 						</select> 
-						
+						<br>
+					★都道府県で選択:
 						<select name="prefectureId" id="select_prefecture" class="prefecture_class">
 							<option value="0">都道府県</option>
 							<c:forEach var="prefecture" items="${prefectureList}" varStatus="status">
@@ -133,8 +135,8 @@ body {
 								<td align="center">メモ:</td>
 								<td align="center">&nbsp;※↑ここ非同期でやりたい</td>
 							<tr>
-								<td colspan="2"><input type=checkbox name="" value="check"
-									align=center><i>お気に入りの店リストに追加する</i></td>
+								<td colspan="2"><input type=checkbox name="" value="check">
+								<i>お気に入りの店リストに追加する</i></td>
 						</table>
 
 

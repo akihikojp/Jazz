@@ -6,21 +6,24 @@
 $(function() {
     // 現在地取得処理
     function initMap() {
+        if (!navigator.geolocation) {
+            alert('Geolocation APIに対応していません');
+            return false;
+        }
       // Geolocation APIに対応している
       if (navigator.geolocation) {
         // 現在地を取得
-        navigator.geolocation.getCurrentPosition(
-          // 取得成功した場合
-          function(position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             // 緯度・経度を変数に格納
             var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             // マップオプションを変数に格納
             var mapOptions = {
-              center : mapLatLng  // 緯度・経度
+              center : mapLatLng,  // 緯度・経度
+              zoom: 17
             };
             // マップオブジェクト作成
             var map = new google.maps.Map(
-              document.getElementById("map"), // マップを表示する要素
+              document.getElementById('map'), // マップを表示する要素
               mapOptions         // マップオプション
             );
             //　マップにマーカーを表示する

@@ -13,7 +13,7 @@ $(function(){
 		})
 		.then(function(prefectures){
 			$('#select_prefecture').empty(); //.empty()で、<option>情報を空っぽにする。.remove()はダメだった。
-			$('#select_prefecture').append($('<option>').html('さらに県で絞る').val(0));
+			$('#select_prefecture').append($('<option>').html('↓県で絞る').val(0));
 			$.each(prefectures, function(index,value){
 				$('#select_prefecture').append($('<option>').html(value.name).val(value.id));  //値は都道府県ID
 			})

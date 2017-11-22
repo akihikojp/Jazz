@@ -8,14 +8,17 @@
 <head>
 <meta charset="UTF-8">
 	<!-- jQuery読込みがBootstrapよりも後にあると、時々正しく動作しない時があるらしい。 -->
-	 <!-- jQuery読み込み -->
+	<!-- jQuery読み込み -->
 	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
-	 <!-- BootstrapのJS読み込み -->
- 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y&amp;"></script>
+	<!-- 喫茶の方 -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
+	<!-- ゴールデン街の方 -->
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y"></script> -->
+	<!-- BootstrapのJS読み込み -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
     	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/findBar.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
@@ -32,6 +35,7 @@
      		margin-left: auto;
      		margin-right: auto;
      		display: block;
+     		zoom : 0.6;
      	}
     </style>
 
