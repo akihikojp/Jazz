@@ -75,7 +75,9 @@ body {
 							<span aria-hidden="true">&laquo;</span>
 							</a> 
 						</li> -->				
+						
 						<li id="yahiro-pagination-id"><a>ページ数</a></li>	
+						
 	<!-- 					<li>
 							<a href="#" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
