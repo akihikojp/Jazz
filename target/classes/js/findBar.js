@@ -1,6 +1,6 @@
 $(function() {
 	//top.jsp:GoogleMapタグid
-	sirusiizu.initialize("mapCanvas");
+	sirusiizu.initialize('mapCanvas');
 	
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
@@ -23,7 +23,6 @@ $(function() {
 		})
 		.then(function(searchItems){ //←BarListのJSON形式
 			calculatePageNum(searchItems); //ページ数を検索するメソッド
-			serachItems.address[i];
 			dataList = searchItems;
 			
 
@@ -77,9 +76,12 @@ $(function() {
 	        	  newDataList.push(p);                   // i*cnt 番目から取得したものをnewDataList に追加
 	        }
 	        
-	    console.log('ソートした後の配列数:' + newDataList.length);
-	    appendHTML(newDataList, pagenationNum);
-	    appendPagenation(newDataList);
+	    console.log('ソート後の配列数:' + newDataList.length);
+	    
+	    appendHTML(newDataList/**(動的)10件ずつの配列リスト*/, pagenationNum/**(動的)ページング番号の配列*/);
+	    appendPagenation(newDataList); //クリックしたページ番号の喫茶店情報を動的に表示.
+	    
+		//sirusiizu.marking(addressList); // sirusiizu.js呼出
 	    
     }) //done終
     
@@ -101,11 +103,12 @@ $(function() {
 	// 以下、外部化メソッド
 
 		
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 	    //ページ数を動的にするメソッド
 	    function appendPagenation(newDataList){
-	    	var pageHTML = "";
+	    	var pageHTML = ""
+	    	//押されたページのリストが表示される.
 	    	$('#yahiro-pagination-id').empty();
 	    	for(var i = 1; i <= newDataList.length; i++){
 	    		pageHTML += '<a class="bar_tag_yahiro">' + i + '</a>'; 
@@ -123,8 +126,21 @@ $(function() {
 	    //第三引数:関数イベントfunction()
 		$(document).on('click', '.bar_tag_yahiro', function(){
 			var pageHTML = "";
+			var putMarkerAddressList = []; //ピンを立てる喫茶店情報のリスト
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
 			appendHTML(newDataList, pagenationNum);
+
+			/**テスト実装ゾーンテスト実装ゾーンテスト実装ゾーン*/
+		//以下でピン立てる処理を書けばいいのか?
+		for(var j = 0; j < newDataList[pagenationNum].length; j++){ //各配列中の入れ子配列要素はいくつあるか
+			console.log( parseInt($(this).text()) +  'ページの' + j + '番目のアドレス:' + newDataList[pagenationNum][j].address);
+			putMarkerAddressList.push(newDataList[pagenationNum][j].address);
+			
+		}
+		sirusiizu.marking(putMarkerAddressList) // sirusiizu.js呼出
+		
+			/**テスト実装ゾーンテスト実装ゾーンテスト実装ゾーン*/
+	    	
 		});
 	    		
 		
@@ -177,15 +193,13 @@ $(function() {
 	        html += '<table border="1">';
 	        html += '<thead>';
 	        html += '<tr>';
-	        html += '<td width="150" align="center">距離が近い順</td>';
-	        html += '<td width="300" align="center">店名</td>';
-	        html += '<td width="200" align="center">現在地から距離</td>';
+	        html += '<td align="center">店名</td>';
+	        html += '<td align="center">現在地からの距離</td>';
 	        html += '</tr>';
 	        html += '</thead>';
 	        
 	    		$.each(dataList[pagenationNum], function(i, data){
 	    			html += '<tr>';
-	                html += '<td>'+(i+1)+'</td>';
 	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
 	                html += data.nameJpa;
 	                html += '</a></td>';

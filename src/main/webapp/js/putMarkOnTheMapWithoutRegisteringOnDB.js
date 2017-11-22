@@ -1,64 +1,12 @@
-/*******************************************************************************
-名前：しるしーず(ライブラリ)
-説明：googleマップで複数住所を一括表示するライブラリ
-　　　windowオブジェクトのプロパティにsirusiizuオブジェクトが追加される。
-版　：1.01
-更新履歴：
-2014/06/06　markingメソッドでaddressオブジェクトの配列が渡された場合の処理を修正。
-
-●sirusiizuオブジェクト
-【メンバ変数】
-　map:
-　callback:markingメソッドの引数で渡したコールバック関数
-　address:addressオブジェクト(下記参照)の配列
-【メソッド】
-　clear:addressプロパティをクリアし、地図上のマーカーを削除する。
-　initialize:地図をdivタグに初期表示する。
-　　《引数》
-　　　id:地図を表示するdivタグのid
-　setCenter:指定された住所を地図の中心にする。
-　　《引数》
-　　　index:中心に置く住所のaddressプロパティのインデックス。
-　marking:addressプロパティの住所から位置情報を取得し、地図にマーカーを置く。
-　　《引数》
-　　　addressList:地図に表示する住所リスト。引数は以下の何れかで渡す。
-　　　　・改行区切りの住所の文字列
-　　　　・住所の配列
-　　　　・ジオコード済のaddressオブジェクト
-　　　cb:ジオコード実行後、全ジオコード終了時に渡された関数をコールバックする。
-　　　　引数は連想配列で渡す。
-　　　　{
-　　　　　onGeocoded: １件のジオコード実行後に呼ばれる関数, 
-　　　　　onGeocodeCompleted: 全ジオコード終了時に呼ばれる関数
-　　　　}
-　　　　《onGeocodedの関数に渡される引数》
-　　　　　index:ジオコードを実行したaddressプロパティのインデックス。
-　　　　　address:ジオコードを実行したaddressオブジェクト。
-　　　　《onGeocodeCompletedの関数に渡される引数》
-　　　　　address:addressオブジェクトの配列。
-
-●addressオブジェクト
-　マーキングに必要な情報がセットされる。
-　sirusiizuオブジェクトのaddressプロパティは、当オブジェクトを配列で保持する。
-【メンバ変数】
-　address:住所
-　iconURL:マーカー画像のURL
-　index:配列内の自身のインデックス
-　title:マーカーのツールチップで表示される文字
-　infoHTML:情報ウィンドウに表示するHTML
-　↓以下はジオコード時に取得し保持するオブジェクト。
-　location
-　icon
-　marker
-*******************************************************************************/
+/**シルシーズからデータベースに登録する機能を排除*/
 (function () {
-var sirusiizu = function () {
+var putMarkOnMap = function () {
 	this.map = null;
 	this.callback = {};
 	this.address = [];
 }
 //プロトタイプとは？：オブジェクトみたいなもの。汎用的な関数をprototypeに定義する
-sirusiizu.prototype = {
+putMarkOnMap.prototype = {
 clear: function () {
 	for (var i = 0; i < this.address.length; i++) {
 		//画面上のピンを都度消してるイメージ
@@ -192,15 +140,7 @@ marking: function (addressList, cb/**コールバック*/) {
 							callback["onGeocodeCompleted"](address);
 						}
 						
-						fitBounds(map, address);
-						
-						//ajaxProcess呼出し.
-						//ここでDBに格納する処理を行なっている.
-						ajaxProcess(ajaxObjList)
-//						.then(function(message) {
-//							alert(message);
-//						})
-						
+//						fitBounds(map, address);
 									
 					   }
 				} else {	//statusがOKじゃなかった時の処理
@@ -220,27 +160,27 @@ marking: function (addressList, cb/**コールバック*/) {
 		}
 	}//codeAddress終
 
-					//境界を合わせる処理
-					function fitBounds(map, address) {
-						north = 0;
-						east  = 0;
-						south = 999;
-						west  = 999;
-						for(var i = 0; i < address.length; i++) {
-							if (address[i].location) {
-								west  = Math.min(west , address[i].location.lng());
-								north = Math.max(north, address[i].location.lat());
-								east  = Math.max(east , address[i].location.lng());
-								south = Math.min(south, address[i].location.lat());
-							}
-						}
-						var northeast = new google.maps.LatLng(north, east);
-						var southwest = new google.maps.LatLng(south, west);
-						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
-					} //fitBounds終
+//					//境界を合わせる処理
+//					function fitBounds(map, address) {
+//						north = 0;
+//						east  = 0;
+//						south = 999;
+//						west  = 999;
+//						for(var i = 0; i < address.length; i++) {
+//							if (address[i].location) {
+//								west  = Math.min(west , address[i].location.lng());
+//								north = Math.max(north, address[i].location.lat());
+//								east  = Math.max(east , address[i].location.lng());
+//								south = Math.min(south, address[i].location.lat());
+//							}
+//						}
+//						var northeast = new google.maps.LatLng(north, east);
+//						var southwest = new google.maps.LatLng(south, west);
+//						map.fitBounds(new google.maps.LatLngBounds(southwest, northeast));
+//					} //fitBounds終
 					
 		} //marking:function終
-} //sirusiizu.prototype終
+} //putMarkOnMap.prototype終
 
-window.sirusiizu = new sirusiizu();  //ここでnew
+window.putMarkOnMap = new putMarkOnMap();  //ここでnew
 })();

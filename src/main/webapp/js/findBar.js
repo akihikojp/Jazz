@@ -137,7 +137,6 @@ $(function() {
 			putMarkerAddressList.push(newDataList[pagenationNum][j].address);
 			
 		}
-//		sirusiizu.marking(newDataList[pagenationNum][j].address) // sirusiizu.js呼出
 		sirusiizu.marking(putMarkerAddressList) // sirusiizu.js呼出
 		
 			/**テスト実装ゾーンテスト実装ゾーンテスト実装ゾーン*/
@@ -194,15 +193,13 @@ $(function() {
 	        html += '<table border="1">';
 	        html += '<thead>';
 	        html += '<tr>';
-	        html += '<td width="150" align="center">距離が近い順</td>';
-	        html += '<td width="300" align="center">店名</td>';
-	        html += '<td width="200" align="center">現在地から距離</td>';
+	        html += '<td align="center">店名</td>';
+	        html += '<td align="center">現在地からの距離</td>';
 	        html += '</tr>';
 	        html += '</thead>';
 	        
 	    		$.each(dataList[pagenationNum], function(i, data){
 	    			html += '<tr>';
-	                html += '<td>'+(i+1)+'</td>';
 	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
 	                html += data.nameJpa;
 	                html += '</a></td>';

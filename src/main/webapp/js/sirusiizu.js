@@ -197,9 +197,9 @@ marking: function (addressList, cb/**コールバック*/) {
 						//ajaxProcess呼出し.
 						//ここでDBに格納する処理を行なっている.
 						ajaxProcess(ajaxObjList)
-						.then(function(message) {
-							alert(message);
-						})
+//						.then(function(message) {
+//							alert(message);
+//						})
 						
 									
 					   }

@@ -64,7 +64,7 @@ body {
 				<br>
 								
 				<!--　喫茶店情報の処理 -->
-				<div id="data-list" align="center"></div>
+				<div id="data-list" align="left"></div>
 
 
 				<!-- ページングの処理 -->

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.rakus.jazz.domain.Bar;
 import jp.co.rakus.jazz.repository.BarRepository;
-import net.arnx.jsonic.JSON;
 
 @Service
 @Transactional

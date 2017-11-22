@@ -8,7 +8,7 @@
 	
 $(function() {
 	// top.jspのGoogleMapタグid
-	sirusiizu.initialize("mapCanvas");
+	sirusiizu.initialize('mapCanvas');
 	
 	// 住所から緯度・経度情報を取得し、MAPにピンを立てる
 	$("#findLatAndLng").on('click', function() {
@@ -20,6 +20,7 @@ $(function() {
 		})
 		.then(function(addressList) {
 			console.log('★sirusiizu.marking:処理前');
+			console.log('JSONのリストはこんな形してます!!!!!! ' + addressList);
 			sirusiizu.marking(addressList) // sirusiizu.js呼出
 			console.log('★sirusiizu.marking:処理後');
 			console.log('★ajaxProcess:作動中');
@@ -38,7 +39,7 @@ $(function() {
 
 /////////////////////////////////////////////////////////////////////////
 
-	// 緯度・経度情報が格納されたajaxObjをController側に渡して、DBに格納するメソッド.
+	// 緯度・経度情報が入ったajaxObjをController側に渡して、DBに格納するメソッド.
 	function ajaxProcess(ajaxObjList) {
 		return new Promise(function(resolve, reject) {
 			$.ajax({
@@ -48,7 +49,7 @@ $(function() {
 			}).then(function(resultValue) {
 				resolve(resultValue);
 			}, function() {
-				reject("DBに緯度・経度情報を格納しています。サーバとの接続状態が不安定です");
+				reject("DB格納作業中。サーバとの接続状態が不安定です。");
 			});
 		});
 	} //end tag

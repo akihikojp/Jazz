@@ -124,8 +124,8 @@ public class TopController {
 		}
 
 		// messageがsirusiizu.jsに渡って、alertで表示されるようになってる。
-		if (message.equals(""))
-			message = "正しくデータが更新されました!";
+		//if (message.equals(""))
+		//	message = "喫茶店情報がMAPに反映されました!";
 		return message;
 	}
 	
