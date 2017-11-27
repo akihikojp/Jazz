@@ -93,23 +93,23 @@ setCenter: function (index) {
 	}
 },
 
-//これ呼んでる.
-marking: function (addressList, cb/**コールバック*/) {
+marking: function (addressList/**住所情報だけが入ってる*/, cb) {
 	var ajaxObjList = new Array();
 	var map = this.map; //どのGoogleMapを使うか宣言してる.
 	var maxValue = 0;
 	this.callback = cb ? cb : {};
 	this.clear();
 	
+	//情報ウィンドウの設定
 	for (var i = 0; i < addressList.length; i++) {
-		
 		if (addressList[i] != "") {
+			//個々のアドレスに情報を持たせる.
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: "img/jazz_icon.png",
-				title: "クリックすると詳細情報が閲覧できます。",
-				infoHTML: "リンククリックで詳細情報が閲覧できます<br>"
+				iconURL: 'img/jazz_icon.png',
+				title: 'クリックすると詳細情報が閲覧できます。',
+				infoHTML: 'リンククリックで詳細情報閲覧<br>'
 				+ '<a href="https://maps.google.co.jp/maps?q=' + addressList[i] + '&z=17&iwloc=A" target="_blank">'
 				+ addressList[i]
 				+ '</a>'
@@ -122,33 +122,56 @@ marking: function (addressList, cb/**コールバック*/) {
 	
 	codeAddress(map, this.address, 0, this.callback, ajaxObjList)
 	return;
+	
+	
+	
+	
+	
+	
 
 	//ピンたてを行うメソッド
-	function putMarker(map, addressList) {
+	function putMarker(map, pin) {
+		
+		if (pin.infoHTML) {
+			var infowindow = new google.maps.InfoWindow({
+				content: pin.infoHTML
+			});
+			pin.infowindow = infowindow;
+//				infowindow.open(map, marker);
+		}
+
 		var marker = new google.maps.Marker({
-			icon: addressList.icon,
-			title: (
-					addressList.title ?
-							addressList.title 
-				:
-					(addressList.index + 1) + ". " + addressList.address
+			icon: 'img/jazz_icon.png',
+			title: ( 
+				pin.title ?  //三項演算子
+				pin.title : (pin.index + 1) + ". " + pin.address
 			),
 			map: map, 
-			position: addressList.location
+			position: pin.location
 		});
-		addressList.marker = marker;
-		if (addressList.infoHTML /**108行目で定義*/ ) {
-			var infowindow = new google.maps.InfoWindow({
-				content: addressList.infoHTML
-			});
-			addressList.infowindow = infowindow;
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.open(map, marker);
-			});
-		}
+		
+		marker.addListener('click', function(){
+			infowindow.open(map, this);
+		});
+		
+		pin.marker = marker;
+		
 	} //putMarkerメソッド
 
+	///////////////////////////////////////////////////////////////////////////////
+//	var marker = "";
+//	
+//	//クリックした部分にピンを立てる。
+//	google.maps.event.addListener(marker, 'click', function() {
+//		infowindow.open(map, marker);
+//	});
 	
+	
+	
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////
 	//経度と緯度を算出するメソッド
 	function codeAddress(map, address, index, callback, addressList) {
 	var geocoder; //geocoder:住所情報を地理座標に変換するAPI.
@@ -201,7 +224,7 @@ marking: function (addressList, cb/**コールバック*/) {
 //							alert(message);
 //						})
 						
-									
+						
 					   }
 				} else {	//statusがOKじゃなかった時の処理
 					//使用制限を超過した場合に吐き出されるエラー文.

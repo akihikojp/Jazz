@@ -24,7 +24,7 @@ $(function() {
 			return null;
 		}
 		$.ajax({
-		url :  hostUrl + '/find_bar?regionId=' + selectRegionVal 
+		url : hostUrl + '/find_bar?regionId=' + selectRegionVal 
 		               + '&prefectureId=' + selectPrefectureVal,
 		dataType : 'json',
 		type : 'GET'
@@ -87,7 +87,7 @@ $(function() {
 	    console.log('ソート後の配列数:' + newDataList.length);
 	    appendHTML(newDataList/** (動的)10件ずつの配列リスト */, pagenationNum/** (動的)ページング番号の配列 */);
 	    appendPagenation(newDataList); // クリックしたページ番号の喫茶店情報を動的に表示.
-	    initMap();//現在地にピンを立てる.
+	    //initMap();//現在地にピンを立てる.
 	    
 	    //ロードGIFをfadeOutさせる
 	    $("#loading").fadeOut(-1000);
@@ -151,6 +151,18 @@ $(function() {
 		});
 	    			    
 	    // /////////////////////////////////////////////////////////////////////////////////////////////////
+		
+//		
+//		google.maps.event.addListener(marker, 'click', function() {
+//		infowindow.open(map, marker);
+//		});
+		
+		
+		
+		
+		
+		
+		// /////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		// HTMLにappendするメソッド. ページング実装で必要になったので外部化.
 	    function appendHTML(dataList, pagenationNum/** onClickしたページ数 */){

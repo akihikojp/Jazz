@@ -13,3 +13,12 @@
      margin-right: auto;
      display: block;
 }
+
+
+
+#loading_container{display:none;}
+
+#loading{
+	position:relative;
+ 	left:15%;
+}

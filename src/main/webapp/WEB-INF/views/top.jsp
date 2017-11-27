@@ -71,7 +71,7 @@ body {
 				<!-- GIF制御のためのコンテナ -->
 				<div id="loading_container">
 				<!-- ロード中のGIF img -->	
-				<div id="loading"> <img src="img/record_gif.gif"> </div>
+				<div id="loading"> <img src="img/loading.gif"> </div>
 				
 				<!-- ページングの処理 -->
 				<nav aria-label="Page navigation">
@@ -120,7 +120,7 @@ body {
 				<div id="mapCanvas" style="position:static"></div>
 
 
-<div class="container">
+<%-- <div class="container">
 	<div class="row browser_box">
 		<div class="col-xs-12">
 			<div class="well">
@@ -133,7 +133,7 @@ body {
 			</div>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 
 

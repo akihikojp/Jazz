@@ -100,16 +100,16 @@ marking: function (addressList, cb/**コールバック*/) {
 	var maxValue = 0;
 	this.callback = cb ? cb : {};
 	this.clear();
-							
+	
+	//情報ウィンドウの設定
 	for (var i = 0; i < addressList.length; i++) {
-		
 		if (addressList[i] != "") {
 			this.address.push({
 				index: i,
 				address: addressList[i],
-				iconURL: "img/jazz_icon.png",
-				title: "クリックすると詳細情報が閲覧できます。",
-				infoHTML: "リンククリックで詳細情報が閲覧できます<br>"
+				iconURL: 'img/jazz_icon.png',
+				title: 'クリックすると詳細情報が閲覧できます。',
+				infoHTML: 'リンククリックで詳細情報が閲覧できます<br>'
 				+ '<a href="https://maps.google.co.jp/maps?q=' + addressList[i] + '&z=17&iwloc=A" target="_blank">'
 				+ addressList[i]
 				+ '</a>'
@@ -127,22 +127,20 @@ marking: function (addressList, cb/**コールバック*/) {
 	function putMarker(map, addressList) {
 		var marker = new google.maps.Marker({
 			icon: addressList.icon,
-			title: (
-					addressList.title ?
-							addressList.title 
-				:
-					(addressList.index + 1) + ". " + addressList.address
+			title: ( 
+			addressList.title ?  //三項演算子
+			addressList.title : (addressList.index + 1) + ". " + addressList.address
 			),
 			map: map, 
 			position: addressList.location
 		});
 		addressList.marker = marker;
-		if (addressList.infoHTML /**108行目で定義*/ ) {
+		if (addressList.infoHTML) {
 			var infowindow = new google.maps.InfoWindow({
 				content: addressList.infoHTML
 			});
 			addressList.infowindow = infowindow;
-			google.maps.event.addListener(marker, 'click', function() {
+			google.maps.event.addListener(marker, 'load', function() {
 				infowindow.open(map, marker);
 			});
 		}

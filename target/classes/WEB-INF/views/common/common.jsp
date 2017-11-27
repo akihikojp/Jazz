@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
 	<!-- 1.initMap付き -->
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script> -->
+	<!--	 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script> -->
 	<!-- 2.initMap無し -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
 	
