@@ -7,20 +7,25 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-	<!-- jQuery読込みがBootstrapよりも後にあると、時々正しく動作しない時があるらしい。 -->
-	<!-- jQuery読み込み -->
+	<!-- jQuery読込みがBootstrapよりも後にあると、時々正しく動作しない時がある -->
 	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
-	<!-- 喫茶の方 -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script>
-	<!-- ゴールデン街の方 -->
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-wuUrwVs-RslgcisplAjkJuvTfZyf2Y"></script> -->
-	<!-- BootstrapのJS読み込み -->
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/currentPosition.js"></script>
     	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/findBar.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script>
+	<!-- 1.initMap付き -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw&callback=initMap"></script>
+	<!-- 2.initMap無し -->
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDksEhWBuS-e45DgaBF9k9KeEDCjMzbNgw"></script> -->
+	
+	<!-- BootstrapのJS読み込み -->
+<%-- 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sirusiizu.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/findBar.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/prefecture.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/getLatitudeAndLongitude.js"></script> --%>
 	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/original.css" rel="stylesheet">
  	
@@ -67,8 +72,8 @@
 			<p class="navbar-text navbar-right">
 			
 			<div align="left" >
-			<b><font size="5" color="#800000">近場のJAZZ喫茶案内MAP&nbsp;&nbsp;〜JAZZ喫茶に行こう〜</font></b><br>
-			<font size="4">あなたの今いる場所から最も近いJAZZ喫茶を見つけます。</font>
+			<b><font size="5" color="#800000">近場の喫茶案内MAP&nbsp;&nbsp;</font></b><br>
+			<font size="4">あなたの今いる場所から最も近い喫茶店を見つけます</font>
 			</div>
 
 

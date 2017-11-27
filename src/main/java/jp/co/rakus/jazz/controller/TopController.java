@@ -46,6 +46,13 @@ public class TopController {
 		model.addAttribute("regionList", prefectureService.findAllRegion());		   // 地域情報(東北地方,関東地方...)
 		return "top";
 	}
+	
+	/**クリックされたバーの情報を表示する。*/
+	public String clickedBarDetails(){
+		return null;
+
+	}
+	
 
 	/** @return 検索条件に合致したBarオブジェクトのリスト(json形式) */
 	@ResponseBody
@@ -96,11 +103,12 @@ public class TopController {
 			regionList = prefectureService.findRegionByPrefectureId(prefectureId);
 		}
 		return regionList;
+	}public TopController() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * sirusiizu.jsで取得したJSON形式のデータをオブジェクトに変換し、DBに格納する
-	 * 
 	 * @param ajaxData jsで取得した緯度・経度データ
 	 * @return DB格納が終わった後に表示されるmessage(sirusiizu.jsのメソッドの引数になってる!)
 	 * @throws JsonParseException, JsonMappingException, IOException

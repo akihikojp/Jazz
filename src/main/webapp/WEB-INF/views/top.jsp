@@ -18,7 +18,7 @@ body {
 
 				<fieldset class="browser_box">
 					<legend style="text-align: center">
-						<i>JAZZ喫茶を検索する </i>
+						<i>喫茶店を検索する </i>
 					</legend>
 
 					<!--   		距離:<select id="distance" name="distance">
@@ -63,10 +63,9 @@ body {
 
 				<br>
 								
-				<!--　喫茶店情報の処理 -->
+				<!--　喫茶店情報の表示とか -->
 				<div id="data-list" align="left"></div>
-
-
+				
 				<!-- ページングの処理 -->
 				<nav aria-label="Page navigation">
 					<ul class="pagination jazz_bar_pagination">
@@ -76,7 +75,7 @@ body {
 							</a> 
 						</li> -->				
 						
-						<li id="yahiro-pagination-id"><a>ページ数</a></li>	
+						<li id="yahiro-pagination-id"><a>検索後ページ数が表示されます</a></li>	
 						
 	<!-- 					<li>
 							<a href="#" aria-label="Next">
@@ -86,70 +85,32 @@ body {
 					</ul>
 				</nav>
 				
-				<br>
-				
-			</div>
-		</div>
-	</div>
-</div>
-
-				<!-- GoogleMapの表示 -->
-				<div id="mapCanvas" style="position:static"></div>
-
-
-<!--  検索結果 -->
-<div class="container">
-	<div class="row browser_box">
-		<div class="col-xs-12">
-			<div class="well">
-				<form:form modelAttribute="bookForm" method="post"
-					action="${pageContext.request.contextPath}/admin/confirm_page">
-					<c:if test="${error != null}">
-						<label class="control-label" style="color: red" for="inputError"><c:out
-								value="${error}" /></label>
-					</c:if>
-
-					<fieldset>
-						<legend style="text-align: center">
-							<i>クリックしたピンの詳細情報</i>
-						</legend>
-
-						<!-- いくつかのピンが表示される。
-							ピンをクリックしたら、下にjsで動的な表示がされる。という実装にしたい。 -->
-						<br>
-						<table align=center border=1 width="350">
+	<!-- 						<table align=center border=1 width="350">
 							<tr>
 								<th colspan="2">喫茶店情報</th>
 							</tr>
 							<tr>
-								<td align="center">店舗名:</td>
-								<td align="center">&nbsp;ゴールデンバー</td>
-							<tr>
-								<td align="center">住所:</td>
-								<td align="center">&nbsp;東京都新宿区</td>
-							<tr>
-								<td align="center">電話番号:</td>
-								<td align="center">&nbsp;0120-888-888</td>
-							<tr>
 								<td align="center">評価:</td>
 								<td align="center">&nbsp;★★★</td>
+							</tr>
 							<tr>
 								<td align="center">メモ:</td>
 								<td align="center">&nbsp;※↑ここ非同期でやりたい</td>
+							</tr>
 							<tr>
 								<td colspan="2"><input type=checkbox name="" value="check">
 								<i>お気に入りの店リストに追加する</i></td>
-						</table>
-
-
-
-					</fieldset>
-				</form:form>
+							</tr>
+						</table> -->
+						
 			</div>
 		</div>
 	</div>
 </div>
 
+
+				<!-- GoogleMapの表示 -->
+				<div id="mapCanvas" style="position:static"></div>
 
 
 <div class="container">

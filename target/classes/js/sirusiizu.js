@@ -74,10 +74,13 @@ clear: function () {
 initialize: function (id) {
 	var myOptions = {
 		zoom: 5,
+		//初回デフォルトで表示される地図の中心点.
 		center: new google.maps.LatLng(35.6891848, 139.6916481),
 		scaleControl: true,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
+	//どのMapを使うかという設定.
+	//ここの'id'は他のjsで定義してる. (例) sirusiizu.initialize('mapCanvas');
 	this.map = new google.maps.Map(document.getElementById(id), myOptions);
 },
 
@@ -90,9 +93,10 @@ setCenter: function (index) {
 	}
 },
 
+//これ呼んでる.
 marking: function (addressList, cb/**コールバック*/) {
 	var ajaxObjList = new Array();
-	var map = this.map;
+	var map = this.map; //どのGoogleMapを使うか宣言してる.
 	var maxValue = 0;
 	this.callback = cb ? cb : {};
 	this.clear();
@@ -109,20 +113,16 @@ marking: function (addressList, cb/**コールバック*/) {
 				+ '<a href="https://maps.google.co.jp/maps?q=' + addressList[i] + '&z=17&iwloc=A" target="_blank">'
 				+ addressList[i]
 				+ '</a>'
-//			    + "<br /><br />緯度：" + address.location.lat().toFixed(7) 
-//							  + "　経度：" + address.location.lng().toFixed(7) + "<br /><br />"
 			});
 		}
 	}
 	
-	if (this.address.length === 0) //addrに何も入ってなかった場合の処理。これがないとgeocodeが無限ループになる。
+	if (this.address.length === 0) //addrに何も入ってなかった場合の処理. これがないとgeocodeが無限ループになる。
 		return;
 	
-													//緯度・経度情報格納リスト
 	codeAddress(map, this.address, 0, this.callback, ajaxObjList)
 	return;
 
-	
 	//ピンたてを行うメソッド
 	function putMarker(map, addressList) {
 		var marker = new google.maps.Marker({
@@ -137,7 +137,7 @@ marking: function (addressList, cb/**コールバック*/) {
 			position: addressList.location
 		});
 		addressList.marker = marker;
-		if (addressList.infoHTML /**上で定義*/ ) {
+		if (addressList.infoHTML /**108行目で定義*/ ) {
 			var infowindow = new google.maps.InfoWindow({
 				content: addressList.infoHTML
 			});

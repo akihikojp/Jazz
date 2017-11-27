@@ -73,15 +73,13 @@ $(function() {
 	        for(var i = 0; i < Math.ceil(number / cnt); i++) { // Math.ceil:引数として与えた数以上の最小の整数を返す
 	        	  var j = i * cnt;
 	        	  var p = dataList.slice(j, j + cnt); 	 
-	        	  newDataList.push(p);                   // i*cnt 番目から取得したものをnewDataList に追加
+	        	  newDataList.push(p);                   // i*cnt 番目から取得したものをnewDataListに追加
 	        }
 	        
 	    console.log('ソート後の配列数:' + newDataList.length);
 	    
 	    appendHTML(newDataList/**(動的)10件ずつの配列リスト*/, pagenationNum/**(動的)ページング番号の配列*/);
 	    appendPagenation(newDataList); //クリックしたページ番号の喫茶店情報を動的に表示.
-	    
-		//sirusiizu.marking(addressList); // sirusiizu.js呼出
 	    
     }) //done終
     
@@ -94,20 +92,16 @@ $(function() {
 	},function(){});	
 			
 		
-		
-		
-		
 ///////////////////////////////////////////////////////////////////////////////////////
 	
-		
 	// 以下、外部化メソッド
-
 		
 ///////////////////////////////////////////////////////////////////////////////////////
 
 	    //ページ数を動的にするメソッド
 	    function appendPagenation(newDataList){
 	    	var pageHTML = ""
+		var putMarkerAddressList = []; //ピンを立てる喫茶店情報のリスト
 	    	//押されたページのリストが表示される.
 	    	$('#yahiro-pagination-id').empty();
 	    	for(var i = 1; i <= newDataList.length; i++){
@@ -115,7 +109,12 @@ $(function() {
 	    	}
 	    	$('#yahiro-pagination-id').html(pageHTML);
 	    	
+	    	//初回に検索をした時は、１ページ目の情報がMAPに表示されるようにする.
+	    	for(var j = 0; j < newDataList[pagenationNum].length; j++){
+	    	putMarkerAddressList.push(newDataList[0][j].address);
 	    };
+	    sirusiizu.marking(putMarkerAddressList)
+	    }
 		
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -125,63 +124,21 @@ $(function() {
 	    //第二引数:セレクタ（上のメソッドで作ったclass名)
 	    //第三引数:関数イベントfunction()
 		$(document).on('click', '.bar_tag_yahiro', function(){
+			var putMarkerAddressList = [];
 			var pageHTML = "";
-			var putMarkerAddressList = []; //ピンを立てる喫茶店情報のリスト
 			pagenationNum = parseInt($(this).text()) - 1; // ページング番号【1】、配列【0】
 			appendHTML(newDataList, pagenationNum);
 
-			/**テスト実装ゾーンテスト実装ゾーンテスト実装ゾーン*/
-		//以下でピン立てる処理を書けばいいのか?
+			//以下、クリックされたページ毎にピンを立てる
 		for(var j = 0; j < newDataList[pagenationNum].length; j++){ //各配列中の入れ子配列要素はいくつあるか
 			console.log( parseInt($(this).text()) +  'ページの' + j + '番目のアドレス:' + newDataList[pagenationNum][j].address);
 			putMarkerAddressList.push(newDataList[pagenationNum][j].address);
 			
 		}
-		sirusiizu.marking(putMarkerAddressList) // sirusiizu.js呼出
-		
-			/**テスト実装ゾーンテスト実装ゾーンテスト実装ゾーン*/
-	    	
+		sirusiizu.marking(putMarkerAddressList) // sirusiizu.jsを呼出して、ピンを立てる。
+
 		});
-	    		
-		
-/////////////////////////////////////////////////////////////////////////////////////////
-	    /**
-		 * 2点間の緯度経度から距離を取得. 測地線航海算法を使用して距離を算出する.
-		 * @see http://hamasyou.com/blog/2010/09/07/post-2/
-		 * @param float 緯度1
-		 * @param float 経度2
-		 * @param float 緯度2
-		 * @param float 経度2
-		 * @param 小数点以下の桁数(べき乗で算出精度を指定)
-		 */
-	    function getDistance(lat1, lng1, lat2, lng2, precision){
-	      var distance = 0;
-	      if( ( Math.abs(lat1 - lat2) < 0.00001 ) && ( Math.abs(lng1 - lng2) < 0.00001 ) ) {
-	        distance = 0;
-	      }else{
-	        lat1 = lat1 * Math.PI / 180;
-	        lng1 = lng1 * Math.PI / 180;
-	        lat2 = lat2 * Math.PI / 180;
-	        lng2 = lng2 * Math.PI / 180;
-
-	        var A = 6378140;
-	        var B = 6356755;
-	        var F = ( A - B ) / A;
-
-	        var P1 = Math.atan( ( B / A ) * Math.tan(lat1) );
-	        var P2 = Math.atan( ( B / A ) * Math.tan(lat2) );
-
-	        var X = Math.acos( Math.sin(P1) * Math.sin(P2) + Math.cos(P1) * Math.cos(P2) * Math.cos(lng1 - lng2) );
-	        var L = ( F / 8 ) * ( ( Math.sin(X) - X ) * Math.pow( (Math.sin(P1) + Math.sin(P2) ), 2) / Math.pow( Math.cos(X / 2), 2 ) - ( Math.sin(X) - X ) * Math.pow( Math.sin(P1) - Math.sin(P2), 2 ) / Math.pow( Math.sin(X), 2) );
-
-	        distance = A * ( X + L );
-	        var decimal_no = Math.pow(10, precision);
-	        distance = Math.round(decimal_no * distance / 1) / decimal_no;
-	      }
-	      return distance;
-	    }
-	    
-	    
+	    			    
 	    ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		//HTMLにappendするメソッド. ページング実装で必要になったので外部化.
@@ -193,17 +150,26 @@ $(function() {
 	        html += '<table border="1">';
 	        html += '<thead>';
 	        html += '<tr>';
-	        html += '<td align="center">店名</td>';
-	        html += '<td align="center">現在地からの距離</td>';
+	        html += '<td width="150">店名</td>';
+	        html += '<td width="50">距離</td>';
+	        html += '<td width="100">TEL</td>';
 	        html += '</tr>';
 	        html += '</thead>';
 	        
 	    		$.each(dataList[pagenationNum], function(i, data){
 	    			html += '<tr>';
-	                html += '<td><a href="https://maps.google.co.jp/maps?q='+data.nameJpa+','+data.address+'&z=17&iwloc=A" target="_blank">';
-	                html += data.nameJpa;
+	    				//ここクリックしたら動的表示できないかな?
+	                html += '<td><a href="https://maps.google.co.jp/maps?q=' 
+	                	     + data.nameJpa + ',' + data.address + '&z=17&iwloc=A" target="_blank">';
+	                html += data.nameJpa + '(' + data.nameEng + ')';
 	                html += '</a></td>';
-	                html += '<td>'+data.distance+'km</td>';
+	                if(data.distance >= 1){
+	                html += '<td>' + Math.round(data.distance) + 'km</td>';
+	                }else {
+	                	html += '<td>' + data.distance * 1000 +'M</td>';
+	                }
+	                html += '<td>' + data.tel + '</td>';
+	                
 	            html += '</tr>';
 	        });
 	    		   html += '</table>';
@@ -281,12 +247,43 @@ $(function() {
 	            return dfd.promise();
 	        }
 		
-///////////////////////////////////////////////////////////////////
-	        
+/////////////////////////////////////////////////////////////////////////////////////////
+		    /**
+			 * 2点間の緯度経度から距離を取得. 測地線航海算法を使用して距離を算出する.
+			 * @see http://hamasyou.com/blog/2010/09/07/post-2/
+			 * @param float 緯度1
+			 * @param float 経度2
+			 * @param float 緯度2
+			 * @param float 経度2
+			 * @param 小数点以下の桁数(べき乗で算出精度を指定)
+			 */
+		    function getDistance(lat1, lng1, lat2, lng2, precision){
+		      var distance = 0;
+		      if( ( Math.abs(lat1 - lat2) < 0.00001 ) && ( Math.abs(lng1 - lng2) < 0.00001 ) ) {
+		        distance = 0;
+		      }else{
+		        lat1 = lat1 * Math.PI / 180;
+		        lng1 = lng1 * Math.PI / 180;
+		        lat2 = lat2 * Math.PI / 180;
+		        lng2 = lng2 * Math.PI / 180;
 
-	        
-	        
-	        
+		        var A = 6378140;
+		        var B = 6356755;
+		        var F = ( A - B ) / A;
+
+		        var P1 = Math.atan( ( B / A ) * Math.tan(lat1) );
+		        var P2 = Math.atan( ( B / A ) * Math.tan(lat2) );
+
+		        var X = Math.acos( Math.sin(P1) * Math.sin(P2) + Math.cos(P1) * Math.cos(P2) * Math.cos(lng1 - lng2) );
+		        var L = ( F / 8 ) * ( ( Math.sin(X) - X ) * Math.pow( (Math.sin(P1) + Math.sin(P2) ), 2) / Math.pow( Math.cos(X / 2), 2 ) - ( Math.sin(X) - X ) * Math.pow( Math.sin(P1) - Math.sin(P2), 2 ) / Math.pow( Math.sin(X), 2) );
+
+		        distance = A * ( X + L );
+		        var decimal_no = Math.pow(10, precision);
+		        distance = Math.round(decimal_no * distance / 1) / decimal_no;
+		      }
+		      return distance;
+		    }
+		    
 ////////////////////////////////////////////
 	             
 	});

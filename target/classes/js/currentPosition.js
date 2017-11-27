@@ -1,35 +1,33 @@
-/**
- * Googlemap上で現在地情報を取得する
- * latitude 緯度(横:赤道)
- * longitude 経度(縦)
- */
-$(function() {
+/**Googlemap上で現在地情報を取得する*/
+	console.log('currentPositionは動いている？');
     // 現在地取得処理
-    function initMap() {
-        if (!navigator.geolocation) {
-            alert('Geolocation APIに対応していません');
-            return false;
-        }
+//    function initMap() {
+//        if (!navigator.geolocation) {
+//            alert('Geolocation APIに対応していません');
+//            return false;
+//        }
       // Geolocation APIに対応している
       if (navigator.geolocation) {
         // 現在地を取得
-        navigator.geolocation.getCurrentPosition(function(position) {
-            // 緯度・経度を変数に格納
+        navigator.geolocation.getCurrentPosition(
+        		//取得成功時
+        		function(position) {
+            // 現在地の緯度・経度を取得
             var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            // マップオプションを変数に格納
             var mapOptions = {
-              center : mapLatLng,  // 緯度・経度
-              zoom: 17
+            		zoom: 12,
+            		center : mapLatLng  // 緯度・経度
             };
             // マップオブジェクト作成
             var map = new google.maps.Map(
-              document.getElementById('map'), // マップを表示する要素
+            		//id指定だが、#はいらないっぽい
+              document.getElementById('mapCanvas'), // マップを表示する要素
               mapOptions         // マップオプション
             );
             //　マップにマーカーを表示する
-            var marker = new google.maps.Marker({
-              map : map,             // 対象の地図オブジェクト
-              position : mapLatLng   // 緯度・経度
+            var marker = new google.maps.Marker({ //マーカー追加
+            	 map : map,              // 対象の地図オブジェクト
+         	 position : mapLatLng    // 緯度・経度
             });
           },
           // 取得失敗した場合
@@ -55,5 +53,4 @@ $(function() {
       } else {
         alert("この端末では位置情報が取得できません");
       }
-    }
-});
+//    } //initMap関数 終

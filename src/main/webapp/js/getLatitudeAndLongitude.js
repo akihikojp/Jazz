@@ -20,7 +20,6 @@ $(function() {
 		})
 		.then(function(addressList) {
 			console.log('★sirusiizu.marking:処理前');
-			console.log('JSONのリストはこんな形してます!!!!!! ' + addressList);
 			sirusiizu.marking(addressList) // sirusiizu.js呼出
 			console.log('★sirusiizu.marking:処理後');
 			console.log('★ajaxProcess:作動中');
