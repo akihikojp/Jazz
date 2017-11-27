@@ -10,6 +10,11 @@ $(function() {
     var newDataList = []; // ページング用配列
 
 	$("#findBar").on('click', function(){
+		//クリック時、ロードGIFをfadeIn.
+		$(function(){
+			$("#loading_container").fadeIn();
+		})
+		
 		var dataList = [],  pagenationNum = 0, newDataList = [];  // 検索ボタンクリック毎に初期化
 		var selectRegionVal = $("#select_region").val();          // 地域ID
 		var selectPrefectureVal = $("#select_prefecture").val();  // 都道府県ID(地域IDのみ選択した場合は、'0')
@@ -83,6 +88,10 @@ $(function() {
 	    
 	    appendHTML(newDataList/** (動的)10件ずつの配列リスト */, pagenationNum/** (動的)ページング番号の配列 */);
 	    appendPagenation(newDataList); // クリックしたページ番号の喫茶店情報を動的に表示.
+	    
+	    
+	    //ロードGIFをfadeOutさせる
+	    $("#loading").fadeOut(-1000);
 	    
     }) // done終
     

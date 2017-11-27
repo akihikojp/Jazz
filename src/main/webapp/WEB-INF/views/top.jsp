@@ -66,6 +66,13 @@ body {
 				<!--　喫茶店情報の表示とか -->
 				<div id="data-list" align="left"></div>
 				
+				
+				
+				<!-- GIF制御のためのコンテナ -->
+				<div id="loading_container">
+				<!-- ロード中のGIF img -->	
+				<div id="loading"> <img src="img/record_gif.gif"> </div>
+				
 				<!-- ページングの処理 -->
 				<nav aria-label="Page navigation">
 					<ul class="pagination jazz_bar_pagination">
@@ -73,17 +80,17 @@ body {
 							<a href="#" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 							</a> 
-						</li> -->				
-						
-						<li id="yahiro-pagination-id"><a>検索後ページ数が表示されます</a></li>	
-						
-	<!-- 					<li>
+						</li>	 -->		
+						<li id="yahiro-pagination-id"><a></a></li>	
+<!-- 	 					<li>
 							<a href="#" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 							</a>
 						</li> -->
 					</ul>
 				</nav>
+				
+				</div>
 				
 	<!-- 						<table align=center border=1 width="350">
 							<tr>
