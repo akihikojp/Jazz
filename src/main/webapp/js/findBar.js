@@ -3,6 +3,7 @@ $(function() {
 	// top.jsp:GoogleMapタグid
 	sirusiizu.initialize('mapCanvas');
 	
+	
 	var pathName = location.pathname.split('/')[1];
 	var hostUrl = '/' + pathName;
 	var dataList = []; // 緯度・経度設定済み
@@ -31,7 +32,6 @@ $(function() {
 		.then(function(searchItems){ // ←BarListのJSON形式
 			calculatePageNum(searchItems); // ページ数を検索するメソッド
 			dataList = searchItems;
-			
 
 		// 取得してきたアイテム数を引数としたページ数の計算メソッド
         function calculatePageNum(searchItems){
@@ -52,7 +52,7 @@ $(function() {
     // データが揃った段階でソートを開始
     $.when(
         dfdCurrentPosition(),
-// dfdGeocode(),
+        // dfdGeocode(),
         dfdDocumentReady(),
         calculatePageNum(searchItems),
         $("#data-list").empty(), // 検索条件を変える毎にテーブル更新される
@@ -85,10 +85,9 @@ $(function() {
 	        }
 	        
 	    console.log('ソート後の配列数:' + newDataList.length);
-	    
 	    appendHTML(newDataList/** (動的)10件ずつの配列リスト */, pagenationNum/** (動的)ページング番号の配列 */);
 	    appendPagenation(newDataList); // クリックしたページ番号の喫茶店情報を動的に表示.
-	    
+	    initMap();//現在地にピンを立てる.
 	    
 	    //ロードGIFをfadeOutさせる
 	    $("#loading").fadeOut(-1000);
@@ -189,7 +188,66 @@ $(function() {
 	    		   html = "";
 	    };
 	    
-// //////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+	    
+	    /**Googlemap上で現在地情報を取得する*/
+		function initMap() {
+	        if (!navigator.geolocation) {
+	            alert('Geolocation APIに対応していません');
+	            return false;
+	        }
+	      // Geolocation APIに対応している
+	      if (navigator.geolocation) {
+	        // 現在地を取得
+	        navigator.geolocation.getCurrentPosition(
+	        		//取得成功時
+	        		function(position) {
+	            // 現在地の緯度・経度を取得
+	            var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	            var mapOptions = {
+	            		zoom: 15,
+	            		center : mapLatLng  // 緯度・経度
+	            };
+	            // マップオブジェクト作成
+	            var currentMap = new google.maps.Map(
+	              document.getElementById('mapCanvas'), // マップを表示する要素
+	              mapOptions         // マップオプション
+	            );
+	            //　マップにマーカーを表示する
+	            var imagePath = 'img/you_are_here.png';
+//	          var animation = google.maps.Animation.BOUNCE;
+	            var marker = new google.maps.Marker({ //マーカー追加
+	            	 map : currentMap,              // 対象の地図オブジェクト
+	         	 position : mapLatLng,    // 緯度・経度
+	         	 icon: imagePath,
+//	         	 animation: animation //ピンのアニメーション        
+	         	 });
+	          },
+	          
+	          // 取得失敗した場合
+	          function(error) {
+	            // エラーメッセージを表示
+	            switch(error.code) {
+	              case 1: // PERMISSION_DENIED
+	                alert("位置情報の利用が許可されていません");
+	                break;
+	              case 2: // POSITION_UNAVAILABLE
+	                alert("現在位置が取得できませんでした");
+	                break;
+	              case 3: // TIMEOUT
+	                alert("タイムアウトになりました");
+	                break;
+	              default:
+	                alert("その他のエラー(エラーコード:"+error.code+")");
+	                break;
+	            }
+	          }); // Geolocation APIに対応していない
+	      } else {
+	        alert("この端末では位置情報が取得できません");
+	      }
+	    } //initMap関数
+	    
+////////////////////////////////////////////////////////////////////
 	    
 	     // DOM Content Loaded
 	     function dfdDocumentReady(){
@@ -301,7 +359,9 @@ $(function() {
 		      return distance;
 		    }
 		    
-// //////////////////////////////////////////
+///////////////////////////////////////////
+
+///////////////////////////////////////////////
 	             
 	});
 });

@@ -1,6 +1,6 @@
 ///**Googlemap上で現在地情報を取得する*/
 //    // 現在地取得処理
-//    function initMap() {
+//	function initMap() {
 //        if (!navigator.geolocation) {
 //            alert('Geolocation APIに対応していません');
 //            return false;
@@ -19,13 +19,12 @@
 //            };
 //            // マップオブジェクト作成
 //            var currentMap = new google.maps.Map(
-//            		//id指定だが、#はいらないっぽい
 //              document.getElementById('mapCanvas'), // マップを表示する要素
 //              mapOptions         // マップオプション
 //            );
 //            //　マップにマーカーを表示する
 //            var imagePath = 'img/you_are_here.png';
-////            var animation = google.maps.Animation.BOUNCE;
+////          var animation = google.maps.Animation.BOUNCE;
 //            var marker = new google.maps.Marker({ //マーカー追加
 //            	 map : currentMap,              // 対象の地図オブジェクト
 //         	 position : mapLatLng,    // 緯度・経度

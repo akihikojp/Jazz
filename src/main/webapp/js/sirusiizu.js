@@ -100,7 +100,7 @@ marking: function (addressList, cb/**コールバック*/) {
 	var maxValue = 0;
 	this.callback = cb ? cb : {};
 	this.clear();
-							
+	
 	for (var i = 0; i < addressList.length; i++) {
 		
 		if (addressList[i] != "") {
